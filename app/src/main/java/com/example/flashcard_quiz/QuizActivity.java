@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +29,8 @@ public class QuizActivity extends AppCompatActivity {
     private TextView tvAnswer1, tvAnswer2, tvAnswer3, tvAnswer4;
     private CardView cardAnswer1, cardAnswer2, cardAnswer3, cardAnswer4;
     private Button btnNext;
+    private ImageView btnBack;
+    private ProgressBar progressBarQuiz;
 
     private List<Word> wordList = new ArrayList<>();
     private List<Word> quizWords = new ArrayList<>();
@@ -71,6 +75,11 @@ public class QuizActivity extends AppCompatActivity {
         cardAnswer4 = findViewById(R.id.card_answer4);
 
         btnNext = findViewById(R.id.btn_next);
+        btnBack = findViewById(R.id.btn_back);
+        progressBarQuiz = findViewById(R.id.progress_bar_quiz);
+
+        // Back button
+        btnBack.setOnClickListener(v -> finish());
 
         // Set click listeners cho từng card
         cardAnswer1.setOnClickListener(v -> checkAnswer(tvAnswer1, cardAnswer1));
@@ -107,8 +116,8 @@ public class QuizActivity extends AppCompatActivity {
                         displayQuestion();
                     } else {
                         Toast.makeText(QuizActivity.this,
-                            "Không đủ từ vựng! Cần ít nhất " + totalQuestions + " từ.",
-                            Toast.LENGTH_LONG).show();
+                                "Không đủ từ vựng! Cần ít nhất " + totalQuestions + " từ.",
+                                Toast.LENGTH_LONG).show();
                         finish();
                     }
                 }
@@ -117,8 +126,8 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<Word>> call, Throwable t) {
                 Toast.makeText(QuizActivity.this,
-                    "Lỗi kết nối: " + t.getMessage(),
-                    Toast.LENGTH_LONG).show();
+                        "Lỗi kết nối: " + t.getMessage(),
+                        Toast.LENGTH_LONG).show();
                 finish();
             }
         });
@@ -136,7 +145,11 @@ public class QuizActivity extends AppCompatActivity {
         Word currentWord = quizWords.get(currentQuestionIndex);
         correctAnswer = currentWord.getVietnamese();
 
-        tvQuestionNumber.setText("Câu " + (currentQuestionIndex + 1) + "/" + totalQuestions);
+        // Update progress bar
+        int progress = (int) (((currentQuestionIndex + 1) * 100.0) / totalQuestions);
+        progressBarQuiz.setProgress(progress);
+
+        tvQuestionNumber.setText("Questions " + (currentQuestionIndex + 1) + " of " + totalQuestions);
         tvScore.setText("Điểm: " + score);
         tvQuestion.setText(currentWord.getEnglish());
 
@@ -157,10 +170,10 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void resetCardColors() {
-        cardAnswer1.setCardBackgroundColor(Color.WHITE);
-        cardAnswer2.setCardBackgroundColor(Color.WHITE);
-        cardAnswer3.setCardBackgroundColor(Color.WHITE);
-        cardAnswer4.setCardBackgroundColor(Color.WHITE);
+        cardAnswer1.setCardBackgroundColor(Color.parseColor("#F8F9FA"));
+        cardAnswer2.setCardBackgroundColor(Color.parseColor("#F8F9FA"));
+        cardAnswer3.setCardBackgroundColor(Color.parseColor("#F8F9FA"));
+        cardAnswer4.setCardBackgroundColor(Color.parseColor("#F8F9FA"));
 
         tvAnswer1.setTextColor(Color.parseColor("#333333"));
         tvAnswer2.setTextColor(Color.parseColor("#333333"));
