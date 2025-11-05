@@ -30,37 +30,37 @@
 
         <!-- Các màn hình cho phần Quiz -->
         <activity
-            android:name=".QuizSetupActivity"
+            android:name="com.example.flashcard_quiz.QuizSetupActivity"
             android:exported="false"
             android:label="Chọn Quiz" />
         <activity
-            android:name=".QuizActivity"
+            android:name="com.example.flashcard_quiz.QuizActivity"
             android:exported="false"
             android:label="Quiz" />
         <activity
-            android:name=".ResultActivity"
+            android:name="com.example.flashcard_quiz.ResultActivity"
             android:exported="false"
             android:label="Kết quả" />
 
         <!-- Các màn hình cho phần CRUD từ vựng -->
         <activity
-            android:name=".VocabularyManagementActivity"
+            android:name="com.example.flashcard_manager.VocabularyManagementActivity"
             android:exported="false"
             android:label="Quản lý từ vựng" />
         <activity
-            android:name=".AllWordsActivity"
+            android:name="com.example.flashcard_manager.AllWordsActivity"
             android:exported="false"
             android:label="Tất cả từ" />
         <activity
-            android:name=".TopicWordsActivity"
+            android:name="com.example.flashcard_manager.TopicWordsActivity"
             android:exported="false"
             android:label="Từ theo chủ đề" />
         <activity
-            android:name=".AddEditTopicActivity"
+            android:name="com.example.flashcard_manager.AddEditTopicActivity"
             android:exported="false"
             android:label="Chỉnh sửa chủ đề" />
         <activity
-            android:name=".AddEditWordActivity"
+            android:name="com.example.flashcard_manager.AddEditWordActivity"
             android:exported="false"
             android:label="Chỉnh sửa từ vựng" />
 

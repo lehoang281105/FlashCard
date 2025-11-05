@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.flashcardnnn.R;
+
 import java.util.ArrayList;
 
 public class ResultActivity extends AppCompatActivity {

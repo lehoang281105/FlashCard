@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.flashcard_manager.R;
+import com.example.flashcardnnn.R;
 import com.example.flashcard_manager.models.Word;
 
 import java.util.ArrayList;

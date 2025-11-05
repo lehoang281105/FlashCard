@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.flashcardnnn.R;
 import com.example.flashcard_manager.models.Topic;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

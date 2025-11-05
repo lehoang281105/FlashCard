@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.flashcardnnn.R;
 import com.example.flashcard_manager.adapters.WordAdapter;
 import com.example.flashcard_manager.api.RetrofitClient;
 import com.example.flashcard_manager.models.Word;

@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.flashcard_manager.R;
+import com.example.flashcardnnn.R;
 import com.example.flashcard_manager.models.Topic;
 
 import java.util.ArrayList;

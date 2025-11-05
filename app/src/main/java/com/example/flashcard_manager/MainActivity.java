@@ -2,7 +2,8 @@ package com.example.flashcard_manager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,9 +11,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.flashcardnnn.R;
+
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnFlashcard, btnQuiz, btnManageVocabulary;
+    private LinearLayout navFlashcard, navQuiz, navVocabulary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,25 +33,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        btnFlashcard = findViewById(R.id.btnFlashcard);
-        btnQuiz = findViewById(R.id.btnQuiz);
-        btnManageVocabulary = findViewById(R.id.btnManageVocabulary);
+        navFlashcard = findViewById(R.id.navFlashcard);
+        navQuiz = findViewById(R.id.navQuiz);
+        navVocabulary = findViewById(R.id.navVocabulary);
     }
 
     private void setupListeners() {
-        btnFlashcard.setOnClickListener(v -> {
+        navFlashcard.setOnClickListener(v -> {
             // TODO: Người 1 sẽ implement
             // Intent intent = new Intent(this, FlashcardActivity.class);
             // startActivity(intent);
         });
 
-        btnQuiz.setOnClickListener(v -> {
+        navQuiz.setOnClickListener(v -> {
             // TODO: Người 2 sẽ implement
             // Intent intent = new Intent(this, QuizActivity.class);
             // startActivity(intent);
         });
 
-        btnManageVocabulary.setOnClickListener(v -> {
+        navVocabulary.setOnClickListener(v -> {
             // Mở màn hình quản lý theo Topics
             Intent intent = new Intent(this, VocabularyManagementActivity.class);
             startActivity(intent);

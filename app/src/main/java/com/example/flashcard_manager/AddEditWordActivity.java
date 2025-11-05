@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.flashcardnnn.R;
 import com.example.flashcard_manager.api.RetrofitClient;
 import com.example.flashcard_manager.models.Word;
 import retrofit2.Call;
