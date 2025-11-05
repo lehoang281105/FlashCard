@@ -170,10 +170,10 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void resetCardColors() {
-        cardAnswer1.setCardBackgroundColor(Color.parseColor("#F8F9FA"));
-        cardAnswer2.setCardBackgroundColor(Color.parseColor("#F8F9FA"));
-        cardAnswer3.setCardBackgroundColor(Color.parseColor("#F8F9FA"));
-        cardAnswer4.setCardBackgroundColor(Color.parseColor("#F8F9FA"));
+        cardAnswer1.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+        cardAnswer2.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+        cardAnswer3.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+        cardAnswer4.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
 
         tvAnswer1.setTextColor(Color.parseColor("#333333"));
         tvAnswer2.setTextColor(Color.parseColor("#333333"));
@@ -210,14 +210,14 @@ public class QuizActivity extends AppCompatActivity {
         cardAnswer4.setEnabled(false);
 
         if (userAnswer.equals(correctAnswer)) {
-            // Đáp án đúng - màu xanh
-            selectedCard.setCardBackgroundColor(Color.parseColor("#4CAF50"));
+            // Đáp án đúng - màu xanh nhạt hơn
+            selectedCard.setCardBackgroundColor(Color.parseColor("#A5D6A7"));
             selectedAnswer.setTextColor(Color.WHITE);
             score++;
             tvScore.setText("Điểm: " + score);
         } else {
-            // Đáp án sai - màu đỏ
-            selectedCard.setCardBackgroundColor(Color.parseColor("#F44336"));
+            // Đáp án sai - màu đỏ nhạt hơn
+            selectedCard.setCardBackgroundColor(Color.parseColor("#EF9A9A"));
             selectedAnswer.setTextColor(Color.WHITE);
 
             // Highlight đáp án đúng màu xanh
@@ -229,16 +229,16 @@ public class QuizActivity extends AppCompatActivity {
 
     private void highlightCorrectAnswer() {
         if (tvAnswer1.getText().toString().equals(correctAnswer)) {
-            cardAnswer1.setCardBackgroundColor(Color.parseColor("#4CAF50"));
+            cardAnswer1.setCardBackgroundColor(Color.parseColor("#A5D6A7"));
             tvAnswer1.setTextColor(Color.WHITE);
         } else if (tvAnswer2.getText().toString().equals(correctAnswer)) {
-            cardAnswer2.setCardBackgroundColor(Color.parseColor("#4CAF50"));
+            cardAnswer2.setCardBackgroundColor(Color.parseColor("#A5D6A7"));
             tvAnswer2.setTextColor(Color.WHITE);
         } else if (tvAnswer3.getText().toString().equals(correctAnswer)) {
-            cardAnswer3.setCardBackgroundColor(Color.parseColor("#4CAF50"));
+            cardAnswer3.setCardBackgroundColor(Color.parseColor("#A5D6A7"));
             tvAnswer3.setTextColor(Color.WHITE);
         } else if (tvAnswer4.getText().toString().equals(correctAnswer)) {
-            cardAnswer4.setCardBackgroundColor(Color.parseColor("#4CAF50"));
+            cardAnswer4.setCardBackgroundColor(Color.parseColor("#A5D6A7"));
             tvAnswer4.setTextColor(Color.WHITE);
         }
     }
