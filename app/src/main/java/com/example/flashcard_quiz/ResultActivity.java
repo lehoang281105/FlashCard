@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class ResultActivity extends AppCompatActivity {
 
-    private TextView tvResult, tvScore, tvMessage;
+    private TextView tvResult, tvScore, tvMessage, tvGrade;
     private Button btnRetry, btnHome;
 
     @Override
@@ -25,6 +25,7 @@ public class ResultActivity extends AppCompatActivity {
         tvResult = findViewById(R.id.tv_result);
         tvScore = findViewById(R.id.tv_score);
         tvMessage = findViewById(R.id.tv_message);
+        tvGrade = findViewById(R.id.tv_grade);
         btnRetry = findViewById(R.id.btn_retry);
         btnHome = findViewById(R.id.btn_home);
 
@@ -36,12 +37,12 @@ public class ResultActivity extends AppCompatActivity {
         int score = getIntent().getIntExtra("score", 0);
         int total = getIntent().getIntExtra("total", 10);
 
-        // Tính điểm chữ cái theo bảng
-        String grade = calculateGrade(score, total);
-        tvScore.setText(score + "/" + total + "\n" + grade);
+        // Hiển thị điểm số bình thường
+        tvScore.setText(score + "/" + total);
 
-        // Tính phần trăm
-        double percentage = (score * 100.0) / total;
+        // Tính điểm chữ cái theo bảng và hiển thị ở giữa vòng tròn
+        String grade = calculateGrade(score, total);
+        tvGrade.setText(grade);
 
         // Hiển thị thông điệp dựa trên kết quả
         if (grade.equals("A+")) {
