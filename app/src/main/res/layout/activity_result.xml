@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/gradient_background"
+    android:gravity="center"
+    android:padding="32dp">
+
+    <!-- Main Result Card -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="8dp"
+        app:cardBackgroundColor="@android:color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="40dp">
+
+            <!-- Circular Avatar/Icon Area -->
+            <RelativeLayout
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_marginBottom="24dp">
+
+                <!-- Outer Circle -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/circle_result_background"/>
+
+                <!-- Grade Letter in Center -->
+                <TextView
+                    android:id="@+id/tv_grade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="A"
+                    android:textSize="72sp"
+                    android:textStyle="bold"
+                    android:textColor="#5E35B1"
+                    android:layout_centerInParent="true"/>
+
+                <!-- Stars Decoration -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⭐"
+                    android:textSize="24sp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="-10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⭐"
+                    android:textSize="20sp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="-5dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⭐"
+                    android:textSize="20sp"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginStart="-5dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🎉"
+                    android:textSize="24sp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🎊"
+                    android:textSize="24sp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="10dp"/>
+
+            </RelativeLayout>
+
+            <!-- Your Score Label -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your Score"
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Score -->
+            <TextView
+                android:id="@+id/tv_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7/15\nD"
+                android:textSize="42sp"
+                android:textStyle="bold"
+                android:textColor="#5E35B1"
+                android:gravity="center"
+                android:lineSpacingExtra="-8dp"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Congratulations Title -->
+            <TextView
+                android:id="@+id/tv_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Congratulations!"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="#5E35B1"
+                android:layout_marginBottom="12dp"/>
+
+            <!-- Message -->
+            <TextView
+                android:id="@+id/tv_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Great job, Kenzy! You have done well"
+                android:textSize="15sp"
+                android:textColor="#666666"
+                android:fontFamily="sans-serif"
+                android:textAlignment="center"/>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Redo Wrong Answers Button -->
+    <Button
+        android:id="@+id/btn_redo_wrong"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Redo Wrong Answers"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:fontFamily="sans-serif-medium"
+        android:background="@drawable/button_secondary"
+        android:stateListAnimator="@null"
+        android:elevation="0dp"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"/>
+
+    <!-- Back to Home Button -->
+    <Button
+        android:id="@+id/btn_home"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Back to Home"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:fontFamily="sans-serif-medium"
+        android:background="@drawable/button_primary"
+        android:stateListAnimator="@null"
+        android:elevation="0dp"
+        android:layout_marginTop="12dp"/>
+
+    <!-- Retry Button (Hidden, can be shown if needed) -->
+    <Button
+        android:id="@+id/btn_retry"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"/>
+
+</LinearLayout>
