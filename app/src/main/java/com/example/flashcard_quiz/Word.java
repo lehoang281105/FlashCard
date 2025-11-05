@@ -1,6 +1,8 @@
 package com.example.flashcard_quiz;
 
-public class Word {
+import java.io.Serializable;
+
+public class Word implements Serializable {
     private String english;
     private String vietnamese;
 

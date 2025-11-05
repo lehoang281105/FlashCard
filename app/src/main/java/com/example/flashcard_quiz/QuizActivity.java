@@ -34,11 +34,13 @@ public class QuizActivity extends AppCompatActivity {
 
     private List<Word> wordList = new ArrayList<>();
     private List<Word> quizWords = new ArrayList<>();
+    private ArrayList<Integer> wrongAnswerIndices = new ArrayList<>();
     private int currentQuestionIndex = 0;
     private int score = 0;
     private int totalQuestions = 10;
     private String correctAnswer = "";
     private boolean hasAnswered = false;
+    private boolean isRedoMode = false;
 
     private SharedPreferences sharedPreferences;
     private static final String PREF_NAME = "QuizPrefs";
@@ -52,6 +54,12 @@ public class QuizActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
 
         totalQuestions = getIntent().getIntExtra("total_questions", 10);
+        isRedoMode = getIntent().getBooleanExtra("is_redo_mode", false);
+
+        if (isRedoMode) {
+            wrongAnswerIndices = getIntent().getIntegerArrayListExtra("wrong_indices");
+            quizWords = (ArrayList<Word>) getIntent().getSerializableExtra("quiz_words");
+        }
 
         initViews();
         loadBestScore();
@@ -78,6 +86,11 @@ public class QuizActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.btn_back);
         progressBarQuiz = findViewById(R.id.progress_bar_quiz);
 
+        if (isRedoMode) {
+            tvBestScore.setText("Làm lại câu sai");
+            totalQuestions = wrongAnswerIndices.size();
+        }
+
         // Back button
         btnBack.setOnClickListener(v -> finish());
 
@@ -98,44 +111,82 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void loadBestScore() {
-        int bestScore = sharedPreferences.getInt(KEY_BEST_SCORE + totalQuestions, 0);
-        tvBestScore.setText("Kỷ lục: " + bestScore + "/" + totalQuestions);
+        if (!isRedoMode) {
+            int bestScore = sharedPreferences.getInt(KEY_BEST_SCORE + totalQuestions, 0);
+            tvBestScore.setText("Kỷ lục: " + bestScore + "/" + totalQuestions);
+        }
     }
 
     private void loadWordsFromAPI() {
-        ApiService apiService = RetrofitClient.getClient().create(ApiService.class);
-        Call<List<Word>> call = apiService.getWords();
+        if (isRedoMode) {
+            // Nếu là chế độ redo, chỉ load wordList để có đáp án sai
+            ApiService apiService = RetrofitClient.getClient().create(ApiService.class);
+            Call<List<Word>> call = apiService.getWords();
 
-        call.enqueue(new Callback<List<Word>>() {
-            @Override
-            public void onResponse(Call<List<Word>> call, Response<List<Word>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    wordList = response.body();
-                    if (wordList.size() >= totalQuestions) {
-                        prepareQuiz();
+            call.enqueue(new Callback<List<Word>>() {
+                @Override
+                public void onResponse(Call<List<Word>> call, Response<List<Word>> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        wordList = response.body();
+                        prepareRedoQuiz();
                         displayQuestion();
-                    } else {
-                        Toast.makeText(QuizActivity.this,
-                                "Không đủ từ vựng! Cần ít nhất " + totalQuestions + " từ.",
-                                Toast.LENGTH_LONG).show();
-                        finish();
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<List<Word>> call, Throwable t) {
-                Toast.makeText(QuizActivity.this,
-                        "Lỗi kết nối: " + t.getMessage(),
-                        Toast.LENGTH_LONG).show();
-                finish();
-            }
-        });
+                @Override
+                public void onFailure(Call<List<Word>> call, Throwable t) {
+                    Toast.makeText(QuizActivity.this,
+                            "Lỗi kết nối: " + t.getMessage(),
+                            Toast.LENGTH_LONG).show();
+                    finish();
+                }
+            });
+        } else {
+            // Chế độ bình thường
+            ApiService apiService = RetrofitClient.getClient().create(ApiService.class);
+            Call<List<Word>> call = apiService.getWords();
+
+            call.enqueue(new Callback<List<Word>>() {
+                @Override
+                public void onResponse(Call<List<Word>> call, Response<List<Word>> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        wordList = response.body();
+                        if (wordList.size() >= totalQuestions) {
+                            prepareQuiz();
+                            displayQuestion();
+                        } else {
+                            Toast.makeText(QuizActivity.this,
+                                    "Không đủ từ vựng! Cần ít nhất " + totalQuestions + " từ.",
+                                    Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Word>> call, Throwable t) {
+                    Toast.makeText(QuizActivity.this,
+                            "Lỗi kết nối: " + t.getMessage(),
+                            Toast.LENGTH_LONG).show();
+                    finish();
+                }
+            });
+        }
     }
 
     private void prepareQuiz() {
         Collections.shuffle(wordList);
-        quizWords = wordList.subList(0, Math.min(totalQuestions, wordList.size()));
+        quizWords = new ArrayList<>(wordList.subList(0, Math.min(totalQuestions, wordList.size())));
+    }
+
+    private void prepareRedoQuiz() {
+        // Tạo danh sách chỉ chứa các câu sai
+        List<Word> redoWords = new ArrayList<>();
+        for (int index : wrongAnswerIndices) {
+            redoWords.add(quizWords.get(index));
+        }
+        quizWords = redoWords;
+        totalQuestions = quizWords.size();
     }
 
     private void displayQuestion() {
@@ -220,6 +271,11 @@ public class QuizActivity extends AppCompatActivity {
             selectedCard.setCardBackgroundColor(Color.parseColor("#EF5350"));
             selectedAnswer.setTextColor(Color.WHITE);
 
+            // Lưu index của câu sai (chỉ trong chế độ bình thường)
+            if (!isRedoMode) {
+                wrongAnswerIndices.add(currentQuestionIndex);
+            }
+
             // Highlight đáp án đúng màu xanh
             highlightCorrectAnswer();
         }
@@ -244,17 +300,28 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void showResult() {
-        int bestScore = sharedPreferences.getInt(KEY_BEST_SCORE + totalQuestions, 0);
-        if (score > bestScore) {
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putInt(KEY_BEST_SCORE + totalQuestions, score);
-            editor.apply();
-        }
-
         Intent intent = new Intent(QuizActivity.this, ResultActivity.class);
         intent.putExtra("score", score);
         intent.putExtra("total", totalQuestions);
-        intent.putExtra("best_score", Math.max(score, bestScore));
+        intent.putExtra("is_redo_mode", isRedoMode);
+
+        if (!isRedoMode) {
+            // Chỉ cập nhật best score trong chế độ bình thường
+            int bestScore = sharedPreferences.getInt(KEY_BEST_SCORE + totalQuestions, 0);
+            if (score > bestScore) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt(KEY_BEST_SCORE + totalQuestions, score);
+                editor.apply();
+            }
+            intent.putExtra("best_score", Math.max(score, bestScore));
+
+            // Gửi danh sách câu sai và quiz words
+            if (!wrongAnswerIndices.isEmpty()) {
+                intent.putIntegerArrayListExtra("wrong_indices", wrongAnswerIndices);
+                intent.putExtra("quiz_words", (ArrayList<Word>) quizWords);
+            }
+        }
+
         startActivity(intent);
         finish();
     }

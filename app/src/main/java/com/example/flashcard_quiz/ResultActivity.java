@@ -2,20 +2,30 @@ package com.example.flashcard_quiz;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 public class ResultActivity extends AppCompatActivity {
 
     private TextView tvResult, tvScore, tvMessage, tvGrade;
-    private Button btnRetry, btnHome;
+    private Button btnRetry, btnHome, btnRedoWrong;
+    private ArrayList<Integer> wrongAnswerIndices;
+    private ArrayList<Word> quizWords;
+    private boolean isRedoMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+
+        isRedoMode = getIntent().getBooleanExtra("is_redo_mode", false);
+        wrongAnswerIndices = getIntent().getIntegerArrayListExtra("wrong_indices");
+        quizWords = (ArrayList<Word>) getIntent().getSerializableExtra("quiz_words");
 
         initViews();
         displayResult();
@@ -28,9 +38,26 @@ public class ResultActivity extends AppCompatActivity {
         tvGrade = findViewById(R.id.tv_grade);
         btnRetry = findViewById(R.id.btn_retry);
         btnHome = findViewById(R.id.btn_home);
+        btnRedoWrong = findViewById(R.id.btn_redo_wrong);
 
         btnRetry.setOnClickListener(v -> retryQuiz());
         btnHome.setOnClickListener(v -> goHome());
+        btnRedoWrong.setOnClickListener(v -> redoWrongAnswers());
+
+        // Ẩn nút Retry (không cần thiết nữa)
+        btnRetry.setVisibility(View.GONE);
+
+        // Hiển thị nút Redo Wrong Answers nếu có câu sai và không phải chế độ redo
+        if (!isRedoMode && wrongAnswerIndices != null && !wrongAnswerIndices.isEmpty()) {
+            btnRedoWrong.setVisibility(View.VISIBLE);
+        } else {
+            btnRedoWrong.setVisibility(View.GONE);
+        }
+
+        // Nếu là chế độ redo, đổi text button Home
+        if (isRedoMode) {
+            btnHome.setText("Back to Quiz Setup");
+        }
     }
 
     private void displayResult() {
@@ -101,10 +128,27 @@ public class ResultActivity extends AppCompatActivity {
         finish();
     }
 
-    private void goHome() {
-        Intent intent = new Intent(ResultActivity.this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    private void redoWrongAnswers() {
+        Intent intent = new Intent(ResultActivity.this, QuizActivity.class);
+        intent.putExtra("is_redo_mode", true);
+        intent.putIntegerArrayListExtra("wrong_indices", wrongAnswerIndices);
+        intent.putExtra("quiz_words", quizWords);
         startActivity(intent);
+        finish();
+    }
+
+    private void goHome() {
+        if (isRedoMode) {
+            // Quay về QuizSetupActivity
+            Intent intent = new Intent(ResultActivity.this, QuizSetupActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        } else {
+            // Quay về MainActivity
+            Intent intent = new Intent(ResultActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
         finish();
     }
 

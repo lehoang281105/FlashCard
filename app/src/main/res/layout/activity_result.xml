@@ -137,22 +137,42 @@
                 android:text="Great job, Kenzy! You have done well"
                 android:textSize="15sp"
                 android:textColor="#666666"
+                android:fontFamily="sans-serif"
                 android:textAlignment="center"/>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
+    <!-- Redo Wrong Answers Button -->
+    <Button
+        android:id="@+id/btn_redo_wrong"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Redo Wrong Answers"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:fontFamily="sans-serif-medium"
+        android:background="@drawable/button_secondary"
+        android:stateListAnimator="@null"
+        android:elevation="0dp"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"/>
+
     <!-- Back to Home Button -->
     <Button
         android:id="@+id/btn_home"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="60dp"
         android:text="Back to Home"
         android:textSize="16sp"
         android:textStyle="bold"
         android:textColor="@android:color/white"
-        android:background="@drawable/button_next_selector"
-        android:layout_marginTop="24dp"/>
+        android:fontFamily="sans-serif-medium"
+        android:background="@drawable/button_primary"
+        android:stateListAnimator="@null"
+        android:elevation="0dp"
+        android:layout_marginTop="12dp"/>
 
     <!-- Retry Button (Hidden, can be shown if needed) -->
     <Button
