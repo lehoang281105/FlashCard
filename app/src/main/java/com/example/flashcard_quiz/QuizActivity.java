@@ -327,4 +327,15 @@ public class QuizActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    @Override
+    public void onBackPressed() {
+        // Khi nhấn back trong quiz, quay về trang chủ MainActivity
+        super.onBackPressed();
+        Intent intent = new Intent(QuizActivity.this, com.example.flashcardnnn.MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        finish();
+    }
 }

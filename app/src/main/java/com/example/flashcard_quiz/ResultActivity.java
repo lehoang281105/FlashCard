@@ -140,17 +140,11 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     private void goHome() {
-        if (isRedoMode) {
-            // Quay về QuizSetupActivity
-            Intent intent = new Intent(ResultActivity.this, QuizSetupActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-        } else {
-            // Quay về MainActivity
-            Intent intent = new Intent(ResultActivity.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-        }
+        // Luôn quay về MainActivity chính của app (package com.example.flashcardnnn)
+        Intent intent = new Intent(ResultActivity.this, com.example.flashcardnnn.MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
         finish();
     }
 
