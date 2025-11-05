@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,10 +40,13 @@ public class VocabularyManagementActivity extends AppCompatActivity implements T
     private TopicAdapter adapter;
     private FloatingActionButton fabAddTopic;
     private ProgressBar progressBar;
+    private androidx.appcompat.widget.SearchView searchViewTopic;
+    private TextView tvEmptyState;
     private SharedPreferences sharedPreferences;
     private static final String PREFS_NAME = "TopicPrefs";
     private static final String TOPICS_KEY = "topics";
     private List<Topic> topicList = new ArrayList<>();
+    private List<Topic> filteredTopicList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,17 +65,29 @@ public class VocabularyManagementActivity extends AppCompatActivity implements T
         recyclerView = findViewById(R.id.rvTopics);
         fabAddTopic = findViewById(R.id.fabAddTopic);
         progressBar = findViewById(R.id.progressBar);
+        androidx.appcompat.widget.SearchView searchViewTopic = findViewById(R.id.searchViewTopic);
+        tvEmptyState = findViewById(R.id.tvEmptyState);
 
-        // ẨN nút thêm topic vì field phải khớp với MockAPI schema
-        // User chỉ dùng 14 topics mặc định
-        fabAddTopic.setVisibility(View.GONE);
+        // Kích hoạt nút thêm topic
+        fabAddTopic.setVisibility(View.VISIBLE);
 
         fabAddTopic.setOnClickListener(v -> {
-            Toast.makeText(this,
-                    "⚠️ Không thể thêm chủ đề mới!\n\n" +
-                    "Chủ đề phải khớp với field trong MockAPI.\n" +
-                    "Hãy dùng 14 chủ đề có sẵn.",
-                    Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, AddEditTopicActivity.class);
+            startActivity(intent);
+        });
+
+        // Setup search functionality
+        searchViewTopic.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterTopics(newText);
+                return true;
+            }
         });
     }
 
@@ -82,12 +98,6 @@ public class VocabularyManagementActivity extends AppCompatActivity implements T
     }
 
     private void loadTopics() {
-        // FORCE XÓA topics cũ và tạo lại topics mặc định với field đúng
-        // Để đảm bảo field luôn là "animal", "food", "people" chứ không phải UUID
-        topicList = new ArrayList<>();
-        createDefaultTopics();
-
-        /* CODE CŨ - ĐỪNG DÙNG VÌ NÓ LOAD TOPICS CŨ CÓ UUID
         String json = sharedPreferences.getString(TOPICS_KEY, null);
         if (json != null) {
             Type type = new TypeToken<List<Topic>>() {}.getType();
@@ -103,9 +113,9 @@ public class VocabularyManagementActivity extends AppCompatActivity implements T
         if (topicList.isEmpty()) {
             createDefaultTopics();
         }
-        */
 
-        adapter.setTopics(topicList);
+        filteredTopicList = new ArrayList<>(topicList);
+        adapter.setTopics(filteredTopicList);
     }
 
     private void createDefaultTopics() {
@@ -142,20 +152,27 @@ public class VocabularyManagementActivity extends AppCompatActivity implements T
 
         saveTopics();
 
-        // KHÔNG hiển thị dialog nữa vì mỗi lần mở đều reset
-        // showFirstTimeDialog();
+        showFirstTimeDialog();
     }
 
     private void showFirstTimeDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle("🎉 Chào mừng đến với FlashLearn!")
-                .setMessage("Bạn đã có 14 chủ đề với 70 từ vựng!\n\n" +
-                        "📚 Click vào chủ đề để xem từ vựng\n" +
-                        "➕ Nhấn nút + để thêm chủ đề mới\n\n" +
-                        "Dữ liệu đã có sẵn trong hệ thống.")
-                .setPositiveButton("Bắt đầu", null)
-                .setCancelable(false)
-                .show();
+        SharedPreferences prefs = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        boolean isFirstTime = prefs.getBoolean("isFirstTime", true);
+
+        if (isFirstTime) {
+            new AlertDialog.Builder(this)
+                    .setTitle("🎉 Chào mừng đến với FlashLearn!")
+                    .setMessage("Bạn đã có 14 chủ đề với 70 từ vựng!\n\n" +
+                            "📚 Click vào chủ đề để xem từ vựng\n" +
+                            "➕ Nhấn nút + để thêm chủ đề/từ vựng mới\n" +
+                            "🔍 Sử dụng thanh tìm kiếm để tìm nhanh\n\n" +
+                            "Chúc bạn học tập vui vẻ!")
+                    .setPositiveButton("Bắt đầu", null)
+                    .setCancelable(false)
+                    .show();
+
+            prefs.edit().putBoolean("isFirstTime", false).apply();
+        }
     }
 
     private void saveTopics() {
@@ -243,7 +260,8 @@ public class VocabularyManagementActivity extends AppCompatActivity implements T
             topic.setWordCount(wordCounts.getOrDefault(topic.getId(), 0));
         }
 
-        adapter.setTopics(topicList);
+        filteredTopicList = new ArrayList<>(topicList);
+        adapter.setTopics(filteredTopicList);
     }
 
     @Override
@@ -327,9 +345,33 @@ public class VocabularyManagementActivity extends AppCompatActivity implements T
 
     private void removeTopicFromList(Topic topic) {
         topicList.remove(topic);
+        filteredTopicList.remove(topic);
         saveTopics();
-        adapter.setTopics(topicList);
+        adapter.setTopics(filteredTopicList);
         Toast.makeText(this, "Đã xóa topic", Toast.LENGTH_SHORT).show();
+    }
+
+    private void filterTopics(String query) {
+        if (query == null || query.trim().isEmpty()) {
+            filteredTopicList = new ArrayList<>(topicList);
+        } else {
+            filteredTopicList = new ArrayList<>();
+            String lowerCaseQuery = query.toLowerCase().trim();
+            for (Topic topic : topicList) {
+                if (topic.getName().toLowerCase().contains(lowerCaseQuery) ||
+                    topic.getDescription().toLowerCase().contains(lowerCaseQuery)) {
+                    filteredTopicList.add(topic);
+                }
+            }
+        }
+
+        adapter.setTopics(filteredTopicList);
+
+        if (filteredTopicList.isEmpty()) {
+            tvEmptyState.setVisibility(View.VISIBLE);
+        } else {
+            tvEmptyState.setVisibility(View.GONE);
+        }
     }
 
     @Override

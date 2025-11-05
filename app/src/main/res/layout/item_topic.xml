@@ -4,34 +4,47 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="4dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="3dp"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="?attr/selectableItemBackground">
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/card_background">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp"
-        android:background="@color/white">
+        android:padding="16dp">
 
+        <!-- Header with Icon and Actions -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
-            <!-- Icon chủ đề -->
-            <TextView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:text="📚"
-                android:textSize="32sp"
-                android:gravity="center"
-                android:layout_marginEnd="12dp" />
+            <!-- Colored Icon Background -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvIconBackground"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                app:cardCornerRadius="28dp"
+                app:cardElevation="0dp"
+                android:layout_marginEnd="12dp">
 
+                <TextView
+                    android:id="@+id/tvTopicIcon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="📚"
+                    android:textSize="32sp"
+                    android:gravity="center"
+                    android:background="@android:color/transparent" />
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Topic Info -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -45,7 +58,7 @@
                     android:text="Topic Name"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/text_primary" />
 
                 <TextView
                     android:id="@+id/tvTopicDescription"
@@ -53,19 +66,18 @@
                     android:layout_height="wrap_content"
                     android:text="Description"
                     android:textSize="14sp"
-                    android:textColor="@android:color/darker_gray"
+                    android:textColor="@color/text_secondary"
                     android:layout_marginTop="4dp"
                     android:maxLines="2"
                     android:ellipsize="end" />
 
             </LinearLayout>
 
-            <!-- ẨN nút Edit/Delete vì topics mặc định không được sửa/xóa -->
+            <!-- Edit & Delete Buttons -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="gone">
+                android:orientation="horizontal">
 
                 <ImageButton
                     android:id="@+id/btnEditTopic"
@@ -73,8 +85,8 @@
                     android:layout_height="40dp"
                     android:src="@android:drawable/ic_menu_edit"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="Edit"
-                    android:tint="@color/purple_500" />
+                    android:contentDescription="Sửa"
+                    android:tint="@color/primary" />
 
                 <ImageButton
                     android:id="@+id/btnDeleteTopic"
@@ -82,21 +94,22 @@
                     android:layout_height="40dp"
                     android:src="@android:drawable/ic_menu_delete"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="Delete"
-                    android:tint="@color/red" />
+                    android:contentDescription="Xóa"
+                    android:tint="@color/error" />
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <!-- Số lượng từ -->
+        <!-- Divider -->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#EEEEEE"
+            android:background="#E2E8F0"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="8dp" />
 
+        <!-- Bottom Info -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -107,25 +120,32 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Nhấn để xem từ vựng →"
+                android:text="👉 Nhấn để xem từ vựng"
                 android:textSize="12sp"
-                android:textColor="@color/purple_700"
+                android:textColor="@color/primary"
                 android:textStyle="italic" />
 
-            <TextView
-                android:id="@+id/tvWordCount"
+            <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0 từ"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="@color/purple_500"
-                android:background="@color/purple_200"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp"
-                android:layout_marginStart="8dp" />
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/primary_light">
+
+                <TextView
+                    android:id="@+id/tvWordCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0 từ"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp" />
+
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 

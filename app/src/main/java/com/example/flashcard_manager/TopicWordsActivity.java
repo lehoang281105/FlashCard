@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,10 +29,10 @@ public class TopicWordsActivity extends AppCompatActivity implements WordAdapter
     private WordAdapter adapter;
     private FloatingActionButton fabAddWord;
     private ProgressBar progressBar;
-    private TextView tvEmptyState;
     private String topicId;
     private String topicName;
     private List<Word> wordList = new ArrayList<>();
+    private List<Word> filteredWordList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +53,27 @@ public class TopicWordsActivity extends AppCompatActivity implements WordAdapter
         recyclerView = findViewById(R.id.rvWords);
         fabAddWord = findViewById(R.id.fabAddWord);
         progressBar = findViewById(R.id.progressBar);
-        tvEmptyState = findViewById(R.id.tvEmptyState);
+        androidx.appcompat.widget.SearchView searchViewWord = findViewById(R.id.searchViewWord);
 
         fabAddWord.setOnClickListener(v -> {
             Intent intent = new Intent(TopicWordsActivity.this, AddEditWordActivity.class);
             intent.putExtra("topicId", topicId);
             intent.putExtra("topicName", topicName);
             startActivity(intent);
+        });
+
+        // Setup search functionality
+        searchViewWord.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterWords(newText);
+                return true;
+            }
         });
     }
 
@@ -78,12 +91,14 @@ public class TopicWordsActivity extends AppCompatActivity implements WordAdapter
         }
 
         progressBar.setVisibility(View.VISIBLE);
-        tvEmptyState.setVisibility(View.GONE);
+        View emptyStateView = findViewById(R.id.tvEmptyState);
+        if (emptyStateView != null) {
+            emptyStateView.setVisibility(View.GONE);
+        }
 
         android.util.Log.d("TopicWords", "===== BẮT ĐẦU LOAD WORDS =====");
         android.util.Log.d("TopicWords", "Topic ID (field): " + topicId);
         android.util.Log.d("TopicWords", "Topic Name: " + topicName);
-        android.util.Log.d("TopicWords", "Lấy TẤT CẢ words rồi filter theo field: " + topicId);
 
         // MockAPI KHÔNG hỗ trợ query by field, phải lấy tất cả rồi filter ở client
         RetrofitClient.getWordApiService().getAllWords().enqueue(new Callback<List<Word>>() {
@@ -92,7 +107,6 @@ public class TopicWordsActivity extends AppCompatActivity implements WordAdapter
                 progressBar.setVisibility(View.GONE);
 
                 android.util.Log.d("TopicWords", "Response code: " + response.code());
-                android.util.Log.d("TopicWords", "Response successful: " + response.isSuccessful());
 
                 if (response.isSuccessful() && response.body() != null) {
                     List<Word> allWords = response.body();
@@ -102,8 +116,6 @@ public class TopicWordsActivity extends AppCompatActivity implements WordAdapter
                     wordList = new ArrayList<>();
                     for (Word word : allWords) {
                         String wordField = word.getTopicId();
-                        android.util.Log.d("TopicWords", "Checking word: " + word.getWord() + " | field: " + wordField);
-
                         if (wordField != null && wordField.equals(topicId)) {
                             wordList.add(word);
                         }
@@ -111,15 +123,23 @@ public class TopicWordsActivity extends AppCompatActivity implements WordAdapter
 
                     android.util.Log.d("TopicWords", "Số từ sau khi filter: " + wordList.size());
 
-                    adapter.setWords(wordList);
+                    filteredWordList = new ArrayList<>(wordList);
+                    adapter.setWords(filteredWordList);
 
-                    if (wordList.isEmpty()) {
-                        tvEmptyState.setVisibility(View.VISIBLE);
-                        android.util.Log.d("TopicWords", "Không có từ nào cho field: " + topicId);
+                    View emptyStateView = findViewById(R.id.tvEmptyState);
+                    if (emptyStateView != null) {
+                        if (wordList.isEmpty()) {
+                            emptyStateView.setVisibility(View.VISIBLE);
+                        } else {
+                            emptyStateView.setVisibility(View.GONE);
+                        }
                     }
                 } else {
                     android.util.Log.e("TopicWords", "Response KHÔNG thành công!");
-                    tvEmptyState.setVisibility(View.VISIBLE);
+                    View emptyStateView = findViewById(R.id.tvEmptyState);
+                    if (emptyStateView != null) {
+                        emptyStateView.setVisibility(View.VISIBLE);
+                    }
                     Toast.makeText(TopicWordsActivity.this,
                             "Lỗi khi tải từ vựng (code: " + response.code() + ")",
                             Toast.LENGTH_SHORT).show();
@@ -129,7 +149,10 @@ public class TopicWordsActivity extends AppCompatActivity implements WordAdapter
             @Override
             public void onFailure(Call<List<Word>> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
-                tvEmptyState.setVisibility(View.VISIBLE);
+                View emptyStateView = findViewById(R.id.tvEmptyState);
+                if (emptyStateView != null) {
+                    emptyStateView.setVisibility(View.VISIBLE);
+                }
                 android.util.Log.e("TopicWords", "API FAILURE: " + t.getMessage(), t);
                 Toast.makeText(TopicWordsActivity.this,
                         "Lỗi: " + t.getMessage(),
@@ -140,14 +163,25 @@ public class TopicWordsActivity extends AppCompatActivity implements WordAdapter
 
     @Override
     public void onEditClick(Word word) {
+        android.util.Log.d("TopicWords", "===== ON EDIT CLICK =====");
+        android.util.Log.d("TopicWords", "Word ID: " + word.getId());
+        android.util.Log.d("TopicWords", "Word: " + word.getWord());
+        android.util.Log.d("TopicWords", "Meaning: " + word.getMeaning());
+        android.util.Log.d("TopicWords", "Pronunciation: " + word.getPronunciation());
+        android.util.Log.d("TopicWords", "Example: " + word.getExample());
+        android.util.Log.d("TopicWords", "Topic ID: " + topicId);
+        android.util.Log.d("TopicWords", "Topic Name: " + topicName);
+
         Intent intent = new Intent(this, AddEditWordActivity.class);
         intent.putExtra("wordId", word.getId());
         intent.putExtra("word", word.getWord());
         intent.putExtra("meaning", word.getMeaning());
         intent.putExtra("pronunciation", word.getPronunciation());
         intent.putExtra("example", word.getExample());
-        intent.putExtra("topicId", word.getTopicId());
-        intent.putExtra("topicName", word.getTopicName());
+        intent.putExtra("topicId", topicId);
+        intent.putExtra("topicName", topicName);
+
+        android.util.Log.d("TopicWords", "✅ Starting AddEditWordActivity...");
         startActivity(intent);
     }
 
@@ -188,6 +222,33 @@ public class TopicWordsActivity extends AppCompatActivity implements WordAdapter
                         Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void filterWords(String query) {
+        if (query == null || query.trim().isEmpty()) {
+            filteredWordList = new ArrayList<>(wordList);
+        } else {
+            filteredWordList = new ArrayList<>();
+            String lowerCaseQuery = query.toLowerCase().trim();
+            for (Word word : wordList) {
+                if (word.getWord().toLowerCase().contains(lowerCaseQuery) ||
+                    word.getMeaning().toLowerCase().contains(lowerCaseQuery) ||
+                    (word.getExample() != null && word.getExample().toLowerCase().contains(lowerCaseQuery))) {
+                    filteredWordList.add(word);
+                }
+            }
+        }
+
+        adapter.setWords(filteredWordList);
+
+        View emptyStateView = findViewById(R.id.tvEmptyState);
+        if (emptyStateView != null) {
+            if (filteredWordList.isEmpty()) {
+                emptyStateView.setVisibility(View.VISIBLE);
+            } else {
+                emptyStateView.setVisibility(View.GONE);
+            }
+        }
     }
 
     @Override
