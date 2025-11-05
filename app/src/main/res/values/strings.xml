@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">FlashLearn Lite</string>
+    <string name="vocabulary_management">Quản lý từ vựng</string>
+    <string name="add_topic">Thêm Topic</string>
+    <string name="edit_topic">Sửa Topic</string>
+    <string name="add_word">Thêm từ vựng</string>
+    <string name="edit_word">Sửa từ vựng</string>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_reset_topics"
+        android:title="Reset chủ đề về mặc định"
+        android:icon="@android:drawable/ic_menu_revert"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_load_sample_data"
+        android:title="Tải dữ liệu mẫu"
+        android:icon="@android:drawable/stat_sys_download"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_view_all_words"
+        android:title="Xem tất cả từ vựng"
+        android:icon="@android:drawable/ic_menu_view"
+        app:showAsAction="never" />
+</menu>
