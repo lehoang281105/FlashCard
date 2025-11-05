@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.flashcard_quiz'
+    namespace 'com.example.flashcard'
     compileSdk 36
 
     defaultConfig {
-        applicationId "com.example.flashcard_quiz"
+        applicationId "com.example.flashcard"
         minSdk 24
         targetSdk 36
         versionCode 1

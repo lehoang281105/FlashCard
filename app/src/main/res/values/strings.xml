@@ -1,4 +1,5 @@
 <resources>
+    <!-- App Info -->
     <string name="app_name">FlashLearn Lite</string>
 
     <!-- Navigation -->
@@ -18,12 +19,17 @@
     <string name="no_words">Chưa có từ vựng nào!</string>
     <string name="card_progress">%1$d / %2$d</string>
 
-    <!-- Quiz Screen (for Người 2) -->
+    <!-- Quiz Screen -->
     <string name="quiz_title">Làm Quiz</string>
     <string name="coming_soon">Tính năng đang phát triển...</string>
 
-    <!-- Vocabulary Screen (for Người 3) -->
+    <!-- Vocabulary Screen -->
     <string name="vocabulary_title">Quản lý Từ Vựng</string>
+    <string name="vocabulary_management">Quản lý từ vựng</string>
+    <string name="add_topic">Thêm Topic</string>
+    <string name="edit_topic">Sửa Topic</string>
+    <string name="add_word">Thêm từ vựng</string>
+    <string name="edit_word">Sửa từ vựng</string>
 
     <!-- Common -->
     <string name="retry">Thử lại</string>

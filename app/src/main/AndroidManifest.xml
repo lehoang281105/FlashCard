@@ -28,21 +28,41 @@
             </intent-filter>
         </activity>
 
-        <!-- Màn hình phụ (dành cho phần Quiz) -->
+        <!-- Các màn hình cho phần Quiz -->
         <activity
             android:name=".QuizSetupActivity"
             android:exported="false"
             android:label="Chọn Quiz" />
-
         <activity
             android:name=".QuizActivity"
             android:exported="false"
             android:label="Quiz" />
-
         <activity
             android:name=".ResultActivity"
             android:exported="false"
             android:label="Kết quả" />
+
+        <!-- Các màn hình cho phần CRUD từ vựng -->
+        <activity
+            android:name=".VocabularyManagementActivity"
+            android:exported="false"
+            android:label="Quản lý từ vựng" />
+        <activity
+            android:name=".AllWordsActivity"
+            android:exported="false"
+            android:label="Tất cả từ" />
+        <activity
+            android:name=".TopicWordsActivity"
+            android:exported="false"
+            android:label="Từ theo chủ đề" />
+        <activity
+            android:name=".AddEditTopicActivity"
+            android:exported="false"
+            android:label="Chỉnh sửa chủ đề" />
+        <activity
+            android:name=".AddEditWordActivity"
+            android:exported="false"
+            android:label="Chỉnh sửa từ vựng" />
 
     </application>
 

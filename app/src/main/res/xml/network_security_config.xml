@@ -6,8 +6,14 @@
             <certificates src="user" />
         </trust-anchors>
     </base-config>
+
+    <!-- Cho phép traffic và chứng chỉ cho mockapi.io và subdomains -->
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">mockapi.io</domain>
         <domain includeSubdomains="true">6903097bd0f10a340b2250fa.mockapi.io</domain>
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" />
+        </trust-anchors>
     </domain-config>
 </network-security-config>
