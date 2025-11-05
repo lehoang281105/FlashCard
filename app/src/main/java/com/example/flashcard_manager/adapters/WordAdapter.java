@@ -53,11 +53,6 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
         notifyDataSetChanged();
     }
 
-    public void removeWord(int position) {
-        words.remove(position);
-        notifyItemRemoved(position);
-    }
-
     class WordViewHolder extends RecyclerView.ViewHolder {
         private TextView tvWord;
         private TextView tvMeaning;
@@ -68,6 +63,9 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
 
         public WordViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            android.util.Log.d("WordAdapter", "=== Initializing ViewHolder ===");
+
             tvWord = itemView.findViewById(R.id.tvWord);
             tvMeaning = itemView.findViewById(R.id.tvMeaning);
             tvPronunciation = itemView.findViewById(R.id.tvPronunciation);
@@ -75,44 +73,73 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
             btnEdit = itemView.findViewById(R.id.btnEditWord);
             btnDelete = itemView.findViewById(R.id.btnDeleteWord);
 
-            btnEdit.setOnClickListener(v -> {
-                int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION && listener != null) {
-                    listener.onEditClick(words.get(position));
-                }
-            });
+            // Check for null views
+            if (tvWord == null) android.util.Log.e("WordAdapter", "❌ tvWord is NULL!");
+            if (tvMeaning == null) android.util.Log.e("WordAdapter", "❌ tvMeaning is NULL!");
+            if (btnEdit == null) android.util.Log.e("WordAdapter", "❌ btnEdit is NULL!");
+            if (btnDelete == null) android.util.Log.e("WordAdapter", "❌ btnDelete is NULL!");
 
-            btnDelete.setOnClickListener(v -> {
-                int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION && listener != null) {
-                    listener.onDeleteClick(words.get(position));
-                }
-            });
+            // Safe click listeners
+            if (btnEdit != null) {
+                btnEdit.setOnClickListener(v -> {
+                    android.util.Log.d("WordAdapter", "Edit button clicked");
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && listener != null) {
+                        listener.onEditClick(words.get(position));
+                    }
+                });
+            }
+
+            if (btnDelete != null) {
+                btnDelete.setOnClickListener(v -> {
+                    android.util.Log.d("WordAdapter", "Delete button clicked");
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && listener != null) {
+                        listener.onDeleteClick(words.get(position));
+                    }
+                });
+            }
         }
 
         public void bind(Word word) {
-            // Xử lý null values
-            tvWord.setText(word.getWord() != null && !word.getWord().isEmpty()
-                    ? word.getWord()
-                    : "(Chưa có từ)");
-
-            tvMeaning.setText(word.getMeaning() != null && !word.getMeaning().isEmpty()
-                    ? word.getMeaning()
-                    : "(Chưa có nghĩa)");
-
-            if (word.getPronunciation() != null && !word.getPronunciation().isEmpty()) {
-                tvPronunciation.setText("/" + word.getPronunciation() + "/");
-                tvPronunciation.setVisibility(View.VISIBLE);
-            } else {
-                tvPronunciation.setVisibility(View.GONE);
+            if (word == null) {
+                android.util.Log.e("WordAdapter", "❌ Word object is NULL!");
+                return;
             }
 
-            if (word.getExample() != null && !word.getExample().isEmpty()) {
-                tvExample.setText("VD: " + word.getExample());
-                tvExample.setVisibility(View.VISIBLE);
-            } else {
-                tvExample.setVisibility(View.GONE);
+            android.util.Log.d("WordAdapter", "Binding word: " + word.getWord());
+
+            // Xử lý null values với safe checks
+            if (tvWord != null) {
+                tvWord.setText(word.getWord() != null && !word.getWord().isEmpty()
+                        ? word.getWord()
+                        : "(Chưa có từ)");
+            }
+
+            if (tvMeaning != null) {
+                tvMeaning.setText(word.getMeaning() != null && !word.getMeaning().isEmpty()
+                        ? word.getMeaning()
+                        : "(Chưa có nghĩa)");
+            }
+
+            if (tvPronunciation != null) {
+                if (word.getPronunciation() != null && !word.getPronunciation().isEmpty()) {
+                    tvPronunciation.setText("/" + word.getPronunciation() + "/");
+                    tvPronunciation.setVisibility(View.VISIBLE);
+                } else {
+                    tvPronunciation.setVisibility(View.GONE);
+                }
+            }
+
+            if (tvExample != null) {
+                if (word.getExample() != null && !word.getExample().isEmpty()) {
+                    tvExample.setText("VD: " + word.getExample());
+                    tvExample.setVisibility(View.VISIBLE);
+                } else {
+                    tvExample.setVisibility(View.GONE);
+                }
             }
         }
     }
 }
+

@@ -41,7 +41,7 @@ public class VocabularyManagementActivity extends AppCompatActivity implements T
     private FloatingActionButton fabAddTopic;
     private ProgressBar progressBar;
     private androidx.appcompat.widget.SearchView searchViewTopic;
-    private TextView tvEmptyState;
+    private View tvEmptyState; // Changed from TextView to View since it's a LinearLayout in XML
     private SharedPreferences sharedPreferences;
     private static final String PREFS_NAME = "TopicPrefs";
     private static final String TOPICS_KEY = "topics";
@@ -62,60 +62,107 @@ public class VocabularyManagementActivity extends AppCompatActivity implements T
     }
 
     private void initViews() {
-        recyclerView = findViewById(R.id.rvTopics);
-        fabAddTopic = findViewById(R.id.fabAddTopic);
-        progressBar = findViewById(R.id.progressBar);
-        androidx.appcompat.widget.SearchView searchViewTopic = findViewById(R.id.searchViewTopic);
-        tvEmptyState = findViewById(R.id.tvEmptyState);
+        android.util.Log.d("VocabManagement", "=== INIT VIEWS START ===");
 
-        // Kích hoạt nút thêm topic
-        fabAddTopic.setVisibility(View.VISIBLE);
+        try {
+            recyclerView = findViewById(R.id.rvTopics);
+            fabAddTopic = findViewById(R.id.fabAddTopic);
+            progressBar = findViewById(R.id.progressBar);
+            searchViewTopic = findViewById(R.id.searchViewTopic);
+            tvEmptyState = findViewById(R.id.tvEmptyState);
 
-        fabAddTopic.setOnClickListener(v -> {
-            Intent intent = new Intent(this, AddEditTopicActivity.class);
-            startActivity(intent);
-        });
+            android.util.Log.d("VocabManagement", "recyclerView: " + (recyclerView != null ? "OK" : "NULL"));
+            android.util.Log.d("VocabManagement", "fabAddTopic: " + (fabAddTopic != null ? "OK" : "NULL"));
+            android.util.Log.d("VocabManagement", "progressBar: " + (progressBar != null ? "OK" : "NULL"));
+            android.util.Log.d("VocabManagement", "searchViewTopic: " + (searchViewTopic != null ? "OK" : "NULL"));
+            android.util.Log.d("VocabManagement", "tvEmptyState: " + (tvEmptyState != null ? "OK" : "NULL"));
 
-        // Setup search functionality
-        searchViewTopic.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
+            // Check critical views
+            if (recyclerView == null) {
+                throw new RuntimeException("❌ RecyclerView is NULL! Check layout XML.");
+            }
+            if (fabAddTopic == null) {
+                throw new RuntimeException("❌ FAB is NULL! Check layout XML.");
             }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                filterTopics(newText);
-                return true;
+            // Kích hoạt nút thêm topic
+            fabAddTopic.setVisibility(View.VISIBLE);
+            fabAddTopic.setOnClickListener(v -> {
+                Intent intent = new Intent(this, AddEditTopicActivity.class);
+                startActivity(intent);
+            });
+
+            // Setup search functionality
+            if (searchViewTopic != null) {
+                searchViewTopic.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        filterTopics(newText);
+                        return true;
+                    }
+                });
+            } else {
+                android.util.Log.w("VocabManagement", "SearchView is null, skipping search setup");
             }
-        });
+
+            android.util.Log.d("VocabManagement", "=== INIT VIEWS SUCCESS ===");
+
+        } catch (Exception e) {
+            android.util.Log.e("VocabManagement", "❌ CRASH in initViews: " + e.getMessage(), e);
+            Toast.makeText(this, "Lỗi khởi tạo: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            throw e; // Re-throw để app crash và show full stack trace
+        }
     }
 
     private void setupRecyclerView() {
-        adapter = new TopicAdapter(this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+        try {
+            android.util.Log.d("VocabManagement", "=== SETUP RECYCLERVIEW ===");
+            adapter = new TopicAdapter(this);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setAdapter(adapter);
+            android.util.Log.d("VocabManagement", "RecyclerView setup SUCCESS");
+        } catch (Exception e) {
+            android.util.Log.e("VocabManagement", "❌ CRASH in setupRecyclerView: " + e.getMessage(), e);
+            Toast.makeText(this, "Lỗi setup RecyclerView", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void loadTopics() {
-        String json = sharedPreferences.getString(TOPICS_KEY, null);
-        if (json != null) {
-            Type type = new TypeToken<List<Topic>>() {}.getType();
-            topicList = new Gson().fromJson(json, type);
-            if (topicList == null) {
+        try {
+            android.util.Log.d("VocabManagement", "=== LOAD TOPICS START ===");
+
+            String json = sharedPreferences.getString(TOPICS_KEY, null);
+            if (json != null) {
+                Type type = new TypeToken<List<Topic>>() {}.getType();
+                topicList = new Gson().fromJson(json, type);
+                if (topicList == null) {
+                    topicList = new ArrayList<>();
+                }
+            } else {
                 topicList = new ArrayList<>();
             }
-        } else {
-            topicList = new ArrayList<>();
-        }
 
-        // Nếu chưa có topic nào, tạo các topic mặc định
-        if (topicList.isEmpty()) {
-            createDefaultTopics();
-        }
+            // Nếu chưa có topic nào, tạo các topic mặc định
+            if (topicList.isEmpty()) {
+                android.util.Log.d("VocabManagement", "Creating default topics...");
+                createDefaultTopics();
+            }
 
-        filteredTopicList = new ArrayList<>(topicList);
-        adapter.setTopics(filteredTopicList);
+            filteredTopicList = new ArrayList<>(topicList);
+            adapter.setTopics(filteredTopicList);
+
+            android.util.Log.d("VocabManagement", "Loaded " + topicList.size() + " topics");
+            android.util.Log.d("VocabManagement", "=== LOAD TOPICS SUCCESS ===");
+
+        } catch (Exception e) {
+            android.util.Log.e("VocabManagement", "❌ CRASH in loadTopics: " + e.getMessage(), e);
+            Toast.makeText(this, "Lỗi tải chủ đề: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
     }
 
     private void createDefaultTopics() {
