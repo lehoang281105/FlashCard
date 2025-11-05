@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!-- Fragment Container -->
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomNavigation" />
+
+    <!-- Bottom Navigation (Footer) -->
+    <LinearLayout
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/footer_background"
+        android:elevation="12dp"
+        android:orientation="horizontal"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:paddingHorizontal="8dp">
+
+        <!-- Flashcard Tab -->
+        <LinearLayout
+            android:id="@+id/navFlashcard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="4dp"
+            android:background="@drawable/nav_item_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="8dp">
+
+            <ImageView
+                android:id="@+id/iconFlashcard"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:contentDescription="@string/nav_flashcard"
+                android:src="@drawable/ic_flashcard"
+                app:tint="@drawable/nav_item_color" />
+
+            <TextView
+                android:id="@+id/labelFlashcard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/nav_flashcard"
+                android:textColor="@drawable/nav_item_color"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Quiz Tab -->
+        <LinearLayout
+            android:id="@+id/navQuiz"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="4dp"
+            android:background="@drawable/nav_item_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="8dp">
+
+            <ImageView
+                android:id="@+id/iconQuiz"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:contentDescription="@string/nav_quiz"
+                android:src="@drawable/ic_quiz"
+                app:tint="@drawable/nav_item_color" />
+
+            <TextView
+                android:id="@+id/labelQuiz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/nav_quiz"
+                android:textColor="@drawable/nav_item_color"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Vocabulary Tab -->
+        <LinearLayout
+            android:id="@+id/navVocabulary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="4dp"
+            android:background="@drawable/nav_item_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="8dp">
+
+            <ImageView
+                android:id="@+id/iconVocabulary"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:contentDescription="@string/nav_vocabulary"
+                android:src="@drawable/ic_vocabulary"
+                app:tint="@drawable/nav_item_color" />
+
+            <TextView
+                android:id="@+id/labelVocabulary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/nav_vocabulary"
+                android:textColor="@drawable/nav_item_color"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
