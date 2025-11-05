@@ -12,6 +12,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.flashcardnnn.R;
+import com.example.flashcard_quiz.QuizSetupActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,13 +47,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
         navQuiz.setOnClickListener(v -> {
-            // TODO: Người 2 sẽ implement
-            // Intent intent = new Intent(this, QuizActivity.class);
-            // startActivity(intent);
+            // Mở màn hình làm Quiz
+            Intent intent = new Intent(this, QuizSetupActivity.class);
+            startActivity(intent);
         });
 
         navVocabulary.setOnClickListener(v -> {
-            // Mở màn hình quản lý theo Topics
+            // Mở màn hình quản lý từ vựng
             Intent intent = new Intent(this, VocabularyManagementActivity.class);
             startActivity(intent);
         });

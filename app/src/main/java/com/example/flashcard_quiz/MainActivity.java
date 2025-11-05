@@ -13,6 +13,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.flashcardnnn.R;
+import com.example.flashcard_manager.VocabularyManagementActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,8 +52,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         navVocabulary.setOnClickListener(v -> {
-            // TODO: Người 3 sẽ implement
-            Toast.makeText(this, "Chức năng Quản lý - Người 3 sẽ làm", Toast.LENGTH_SHORT).show();
+            // Mở màn hình quản lý từ vựng
+            Intent intent = new Intent(MainActivity.this, VocabularyManagementActivity.class);
+            startActivity(intent);
         });
     }
 }

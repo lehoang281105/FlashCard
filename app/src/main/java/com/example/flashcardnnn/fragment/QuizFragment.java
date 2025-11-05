@@ -1,5 +1,6 @@
 package com.example.flashcardnnn.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.flashcardnnn.R;
+import com.example.flashcard_quiz.QuizSetupActivity;
 
 public class QuizFragment extends Fragment {
 
@@ -24,6 +26,8 @@ public class QuizFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // TODO: Người 2 sẽ code phần Quiz ở đây
+        // Tự động mở QuizSetupActivity khi fragment được tạo
+        Intent intent = new Intent(getActivity(), QuizSetupActivity.class);
+        startActivity(intent);
     }
 }
