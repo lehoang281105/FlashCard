@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
+    android:background="@drawable/gradient_background_setup"
     android:fillViewport="true">
 
     <LinearLayout
@@ -20,7 +20,11 @@
             android:text="📝 CHỌN SỐ CÂU HỎI"
             android:textSize="28sp"
             android:textStyle="bold"
-            android:textColor="#2196F3"
+            android:textColor="#FFFFFF"
+            android:shadowColor="#80000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="4"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="16dp"/>
 
@@ -29,68 +33,73 @@
             android:layout_height="wrap_content"
             android:text="Chọn số lượng câu hỏi bạn muốn làm"
             android:textSize="16sp"
-            android:textColor="#666666"
+            android:textColor="#F0F0F0"
             android:layout_marginBottom="32dp"/>
 
         <!-- Nút 10 câu -->
         <androidx.cardview.widget.CardView
+            android:id="@+id/card_10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp">
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="4dp"
+                android:background="@android:color/white">
 
                 <Button
                     android:id="@+id/btn_10_questions"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="64dp"
                     android:text="10 CÂU HỎI"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:padding="16dp"
-                    android:backgroundTint="#4CAF50"/>
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/button_green_gradient"/>
 
                 <TextView
                     android:id="@+id/tv_best_score_10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Kỷ lục: 0/10"
+                    android:text="Kỷ lục: 10/10"
                     android:textSize="14sp"
                     android:textColor="#666666"
                     android:layout_gravity="center"
-                    android:layout_marginTop="8dp"/>
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="4dp"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <!-- Nút 15 câu -->
         <androidx.cardview.widget.CardView
+            android:id="@+id/card_15"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp">
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="4dp"
+                android:background="@android:color/white">
 
                 <Button
                     android:id="@+id/btn_15_questions"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="64dp"
                     android:text="15 CÂU HỎI"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:padding="16dp"
-                    android:backgroundTint="#2196F3"/>
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/button_blue_gradient"/>
 
                 <TextView
                     android:id="@+id/tv_best_score_15"
@@ -100,33 +109,36 @@
                     android:textSize="14sp"
                     android:textColor="#666666"
                     android:layout_gravity="center"
-                    android:layout_marginTop="8dp"/>
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="4dp"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <!-- Nút 20 câu -->
         <androidx.cardview.widget.CardView
+            android:id="@+id/card_20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp">
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="4dp"
+                android:background="@android:color/white">
 
                 <Button
                     android:id="@+id/btn_20_questions"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="64dp"
                     android:text="20 CÂU HỎI"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:padding="16dp"
-                    android:backgroundTint="#FF9800"/>
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/button_orange_gradient"/>
 
                 <TextView
                     android:id="@+id/tv_best_score_20"
@@ -136,33 +148,36 @@
                     android:textSize="14sp"
                     android:textColor="#666666"
                     android:layout_gravity="center"
-                    android:layout_marginTop="8dp"/>
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="4dp"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <!-- Nút 30 câu -->
         <androidx.cardview.widget.CardView
+            android:id="@+id/card_30"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp">
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="4dp"
+                android:background="@android:color/white">
 
                 <Button
                     android:id="@+id/btn_30_questions"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="64dp"
                     android:text="30 CÂU HỎI"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:padding="16dp"
-                    android:backgroundTint="#F44336"/>
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/button_red_gradient"/>
 
                 <TextView
                     android:id="@+id/tv_best_score_30"
@@ -172,7 +187,8 @@
                     android:textSize="14sp"
                     android:textColor="#666666"
                     android:layout_gravity="center"
-                    android:layout_marginTop="8dp"/>
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="4dp"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
