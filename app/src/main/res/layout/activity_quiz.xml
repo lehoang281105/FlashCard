@@ -4,216 +4,305 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/gradient_background">
+    android:background="@drawable/gradient_background"
+    android:padding="20dp">
 
-    <!-- Header -->
+    <!-- Main Card Container -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="0dp"
-        app:cardElevation="2dp"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="8dp"
         app:cardBackgroundColor="@android:color/white">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:padding="16dp">
-
-            <!-- Back Button -->
-            <ImageView
-                android:id="@+id/btn_back"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@android:drawable/ic_menu_revert"
-                android:layout_centerVertical="true"
-                android:tint="#666666"
-                android:clickable="true"
-                android:focusable="true"/>
-
-            <!-- Title -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Quiz"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="#333333"
-                android:layout_centerInParent="true"/>
-
-            <!-- Empty Timer Space (not displayed but space reserved) -->
-            <View
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"/>
-
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
-
-    <!-- Progress Section -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="24dp">
-
-        <!-- Question Number -->
-        <TextView
-            android:id="@+id/tv_question_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Questions 1 of 10"
-            android:textSize="14sp"
-            android:textColor="#9C27B0"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp"/>
-
-        <!-- Progress Bar -->
-        <ProgressBar
-            android:id="@+id/progress_bar_quiz"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:progressTint="#9C27B0"
-            android:progressBackgroundTint="#E0E0E0"
-            android:max="100"
-            android:progress="10"/>
-    </LinearLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
-            android:paddingBottom="24dp">
+            android:padding="24dp">
 
-            <!-- Câu hỏi -->
-            <TextView
-                android:id="@+id/tv_question"
+            <!-- Header with Back Button and Title -->
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Question"
-                android:textSize="28sp"
+                android:layout_marginBottom="24dp">
+
+                <!-- Back Button -->
+                <ImageView
+                    android:id="@+id/btn_back"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@android:drawable/ic_menu_revert"
+                    android:layout_centerVertical="true"
+                    android:tint="#333333"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="4dp"/>
+
+                <!-- Title -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Math"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:layout_centerInParent="true"/>
+
+            </RelativeLayout>
+
+            <!-- Question Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+
+                <!-- Question Label -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Question"
+                    android:textSize="14sp"
+                    android:textColor="#666666"
+                    android:layout_marginEnd="8dp"/>
+
+                <!-- Question Number -->
+                <TextView
+                    android:id="@+id/tv_question_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="6/20"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#5E35B1"/>
+
+            </LinearLayout>
+
+            <!-- Progress Bar -->
+            <ProgressBar
+                android:id="@+id/progress_bar_quiz"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:progressTint="#5E35B1"
+                android:progressBackgroundTint="#E8E0F5"
+                android:max="100"
+                android:progress="30"
+                android:layout_marginBottom="24dp"/>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- Question Card -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="#F3E5F5"
+                        android:layout_marginBottom="20dp">
+
+                        <TextView
+                            android:id="@+id/tv_question"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Question"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="#000000"
+                            android:padding="20dp"
+                            android:lineSpacingExtra="4dp"/>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Answer Options -->
+                    <!-- Answer 1 -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_answer1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="#F8F4FB"
+                        android:layout_marginBottom="12dp"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="16dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:text="a"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:textColor="#5E35B1"
+                                android:gravity="center"
+                                android:layout_marginEnd="12dp"/>
+
+                            <TextView
+                                android:id="@+id/tv_answer1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Answer 1"
+                                android:textSize="15sp"
+                                android:textColor="#000000"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Answer 2 -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_answer2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="#F8F4FB"
+                        android:layout_marginBottom="12dp"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="16dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:text="b"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:textColor="#5E35B1"
+                                android:gravity="center"
+                                android:layout_marginEnd="12dp"/>
+
+                            <TextView
+                                android:id="@+id/tv_answer2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Answer 2"
+                                android:textSize="15sp"
+                                android:textColor="#000000"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Answer 3 -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_answer3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="#F8F4FB"
+                        android:layout_marginBottom="12dp"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="16dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:text="c"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:textColor="#5E35B1"
+                                android:gravity="center"
+                                android:layout_marginEnd="12dp"/>
+
+                            <TextView
+                                android:id="@+id/tv_answer3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Answer 3"
+                                android:textSize="15sp"
+                                android:textColor="#000000"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Answer 4 -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_answer4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="#F8F4FB"
+                        android:layout_marginBottom="12dp"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="16dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:text="d"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:textColor="#5E35B1"
+                                android:gravity="center"
+                                android:layout_marginEnd="12dp"/>
+
+                            <TextView
+                                android:id="@+id/tv_answer4"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Answer 4"
+                                android:textSize="15sp"
+                                android:textColor="#000000"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+            </ScrollView>
+
+            <!-- Next Button -->
+            <Button
+                android:id="@+id/btn_next"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="Next"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="#333333"
-                android:layout_marginBottom="32dp"/>
-
-            <!-- Đáp án 1 -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_answer1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="1dp"
-                app:cardBackgroundColor="@android:color/white"
-                android:layout_marginBottom="12dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground">
-
-                <TextView
-                    android:id="@+id/tv_answer1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Answer 1"
-                    android:textSize="16sp"
-                    android:textColor="#333333"
-                    android:padding="20dp"/>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Đáp án 2 -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_answer2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="1dp"
-                app:cardBackgroundColor="@android:color/white"
-                android:layout_marginBottom="12dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground">
-
-                <TextView
-                    android:id="@+id/tv_answer2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Answer 2"
-                    android:textSize="16sp"
-                    android:textColor="#333333"
-                    android:padding="20dp"/>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Đáp án 3 -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_answer3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="1dp"
-                app:cardBackgroundColor="@android:color/white"
-                android:layout_marginBottom="12dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground">
-
-                <TextView
-                    android:id="@+id/tv_answer3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Answer 3"
-                    android:textSize="16sp"
-                    android:textColor="#333333"
-                    android:padding="20dp"/>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Đáp án 4 -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_answer4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="1dp"
-                app:cardBackgroundColor="@android:color/white"
-                android:layout_marginBottom="12dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground">
-
-                <TextView
-                    android:id="@+id/tv_answer4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Answer 4"
-                    android:textSize="16sp"
-                    android:textColor="#333333"
-                    android:padding="20dp"/>
-            </androidx.cardview.widget.CardView>
+                android:textColor="@android:color/white"
+                android:background="@drawable/button_next_selector"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"/>
 
         </LinearLayout>
-    </ScrollView>
-
-    <!-- Nút Next -->
-    <Button
-        android:id="@+id/btn_next"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:text="Next →"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/white"
-        android:background="@drawable/button_next_selector"
-        android:layout_margin="24dp"
-        android:visibility="gone"/>
+    </androidx.cardview.widget.CardView>
 
     <!-- Hidden TextViews for score tracking -->
     <TextView

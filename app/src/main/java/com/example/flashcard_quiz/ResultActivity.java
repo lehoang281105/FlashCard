@@ -41,22 +41,22 @@ public class ResultActivity extends AppCompatActivity {
         // Tính phần trăm
         double percentage = (score * 100.0) / total;
 
-        // Hiển thị thông điệp dựa trên kết quả
+        // Hiển thị thông điệp dựa trên kết quả - giống trong ảnh
         if (percentage == 100) {
-            tvResult.setText("🎉 XUẤT SẮC!");
-            tvMessage.setText("Hoàn hảo! Bạn đã trả lời đúng tất cả!");
+            tvResult.setText("Congratulations!");
+            tvMessage.setText("Perfect! You have done excellent!");
         } else if (percentage >= 80) {
-            tvResult.setText("😊 RẤT TỐT!");
-            tvMessage.setText("Tuyệt vời! Bạn làm rất tốt!");
+            tvResult.setText("Congratulations!");
+            tvMessage.setText("Great job! You have done well!");
         } else if (percentage >= 60) {
-            tvResult.setText("👍 KHÁ!");
-            tvMessage.setText("Khá ổn! Hãy cố gắng hơn nữa!");
+            tvResult.setText("Good Job!");
+            tvMessage.setText("Nice work! Keep it up!");
         } else if (percentage >= 40) {
-            tvResult.setText("💪 CÓ TIẾN BỘ!");
-            tvMessage.setText("Không tệ! Tiếp tục luyện tập nhé!");
+            tvResult.setText("Keep Trying!");
+            tvMessage.setText("Not bad! Practice makes perfect!");
         } else {
-            tvResult.setText("📚 CẦN CỐ GẮNG!");
-            tvMessage.setText("Đừng nản lòng! Hãy học thêm và thử lại!");
+            tvResult.setText("Keep Learning!");
+            tvMessage.setText("Don't give up! Keep studying!");
         }
     }
 

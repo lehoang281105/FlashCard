@@ -4,92 +4,177 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F5F5F5"
+    android:background="@drawable/gradient_background"
     android:gravity="center"
-    android:padding="24dp">
+    android:padding="32dp">
 
-    <!-- Icon hoặc hình ảnh kết quả -->
-    <TextView
-        android:id="@+id/tv_result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="🎉 XUẤT SẮC!"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        android:textColor="#4CAF50"
-        android:layout_marginBottom="24dp"/>
-
-    <!-- Card điểm số -->
+    <!-- Main Result Card -->
     <androidx.cardview.widget.CardView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        app:cardCornerRadius="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="24dp"
         app:cardElevation="8dp"
-        app:cardBackgroundColor="#FFFFFF"
-        android:layout_marginBottom="32dp">
+        app:cardBackgroundColor="@android:color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:padding="40dp">
 
+            <!-- Circular Avatar/Icon Area -->
+            <RelativeLayout
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_marginBottom="24dp">
+
+                <!-- Outer Circle -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/circle_result_background"/>
+
+                <!-- Stars Decoration would go here -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⭐"
+                    android:textSize="24sp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="-10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⭐"
+                    android:textSize="20sp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="-5dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⭐"
+                    android:textSize="20sp"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginStart="-5dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🎉"
+                    android:textSize="24sp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🎊"
+                    android:textSize="24sp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="10dp"/>
+
+            </RelativeLayout>
+
+            <!-- Your Score Label -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ĐIỂM SỐ"
-                android:textSize="16sp"
+                android:text="Your Score"
+                android:textSize="14sp"
                 android:textColor="#666666"
                 android:layout_marginBottom="8dp"/>
 
+            <!-- Score -->
             <TextView
                 android:id="@+id/tv_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="10/10"
-                android:textSize="48sp"
+                android:text="19/20"
+                android:textSize="42sp"
                 android:textStyle="bold"
-                android:textColor="#2196F3"/>
+                android:textColor="#5E35B1"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Congratulations Title -->
+            <TextView
+                android:id="@+id/tv_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Congratulations!"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="#5E35B1"
+                android:layout_marginBottom="12dp"/>
+
+            <!-- Message -->
+            <TextView
+                android:id="@+id/tv_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Great job, Kenzy! You have done well"
+                android:textSize="15sp"
+                android:textColor="#666666"
+                android:textAlignment="center"
+                android:layout_marginBottom="20dp"/>
+
+            <!-- Points Badge -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="@drawable/points_badge_background"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="💎"
+                    android:textSize="18sp"
+                    android:layout_marginEnd="8dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="200 Points"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="#5E35B1"/>
+            </LinearLayout>
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- Thông điệp -->
-    <TextView
-        android:id="@+id/tv_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hoàn hảo! Bạn đã trả lời đúng tất cả!"
-        android:textSize="18sp"
-        android:textColor="#333333"
-        android:textAlignment="center"
-        android:layout_marginBottom="48dp"/>
-
-    <!-- Các nút điều khiển -->
-    <LinearLayout
+    <!-- Back to Home Button -->
+    <Button
+        android:id="@+id/btn_home"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="56dp"
+        android:text="Back to Home"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:background="@drawable/button_next_selector"
+        android:layout_marginTop="24dp"/>
 
-        <Button
-            android:id="@+id/btn_retry"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="LÀM LẠI"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:padding="16dp"
-            android:backgroundTint="#4CAF50"
-            android:layout_marginBottom="12dp"/>
-
-        <Button
-            android:id="@+id/btn_home"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="VỀ TRANG CHỦ"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:padding="16dp"
-            android:backgroundTint="#2196F3"/>
-    </LinearLayout>
+    <!-- Retry Button (Hidden, can be shown if needed) -->
+    <Button
+        android:id="@+id/btn_retry"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"/>
 
 </LinearLayout>

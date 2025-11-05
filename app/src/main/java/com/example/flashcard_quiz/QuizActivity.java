@@ -149,7 +149,7 @@ public class QuizActivity extends AppCompatActivity {
         int progress = (int) (((currentQuestionIndex + 1) * 100.0) / totalQuestions);
         progressBarQuiz.setProgress(progress);
 
-        tvQuestionNumber.setText("Questions " + (currentQuestionIndex + 1) + " of " + totalQuestions);
+        tvQuestionNumber.setText((currentQuestionIndex + 1) + "/" + totalQuestions);
         tvScore.setText("Điểm: " + score);
         tvQuestion.setText(currentWord.getEnglish());
 
@@ -170,15 +170,15 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void resetCardColors() {
-        cardAnswer1.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
-        cardAnswer2.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
-        cardAnswer3.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
-        cardAnswer4.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+        cardAnswer1.setCardBackgroundColor(Color.parseColor("#F8F4FB"));
+        cardAnswer2.setCardBackgroundColor(Color.parseColor("#F8F4FB"));
+        cardAnswer3.setCardBackgroundColor(Color.parseColor("#F8F4FB"));
+        cardAnswer4.setCardBackgroundColor(Color.parseColor("#F8F4FB"));
 
-        tvAnswer1.setTextColor(Color.parseColor("#333333"));
-        tvAnswer2.setTextColor(Color.parseColor("#333333"));
-        tvAnswer3.setTextColor(Color.parseColor("#333333"));
-        tvAnswer4.setTextColor(Color.parseColor("#333333"));
+        tvAnswer1.setTextColor(Color.parseColor("#000000"));
+        tvAnswer2.setTextColor(Color.parseColor("#000000"));
+        tvAnswer3.setTextColor(Color.parseColor("#000000"));
+        tvAnswer4.setTextColor(Color.parseColor("#000000"));
     }
 
     private List<String> generateAnswers(Word correctWord) {
@@ -210,14 +210,14 @@ public class QuizActivity extends AppCompatActivity {
         cardAnswer4.setEnabled(false);
 
         if (userAnswer.equals(correctAnswer)) {
-            // Đáp án đúng - màu xanh nhạt hơn
-            selectedCard.setCardBackgroundColor(Color.parseColor("#A5D6A7"));
+            // Đáp án đúng - màu xanh lá
+            selectedCard.setCardBackgroundColor(Color.parseColor("#4CAF50"));
             selectedAnswer.setTextColor(Color.WHITE);
             score++;
             tvScore.setText("Điểm: " + score);
         } else {
-            // Đáp án sai - màu đỏ nhạt hơn
-            selectedCard.setCardBackgroundColor(Color.parseColor("#EF9A9A"));
+            // Đáp án sai - màu đỏ
+            selectedCard.setCardBackgroundColor(Color.parseColor("#EF5350"));
             selectedAnswer.setTextColor(Color.WHITE);
 
             // Highlight đáp án đúng màu xanh
@@ -229,16 +229,16 @@ public class QuizActivity extends AppCompatActivity {
 
     private void highlightCorrectAnswer() {
         if (tvAnswer1.getText().toString().equals(correctAnswer)) {
-            cardAnswer1.setCardBackgroundColor(Color.parseColor("#A5D6A7"));
+            cardAnswer1.setCardBackgroundColor(Color.parseColor("#4CAF50"));
             tvAnswer1.setTextColor(Color.WHITE);
         } else if (tvAnswer2.getText().toString().equals(correctAnswer)) {
-            cardAnswer2.setCardBackgroundColor(Color.parseColor("#A5D6A7"));
+            cardAnswer2.setCardBackgroundColor(Color.parseColor("#4CAF50"));
             tvAnswer2.setTextColor(Color.WHITE);
         } else if (tvAnswer3.getText().toString().equals(correctAnswer)) {
-            cardAnswer3.setCardBackgroundColor(Color.parseColor("#A5D6A7"));
+            cardAnswer3.setCardBackgroundColor(Color.parseColor("#4CAF50"));
             tvAnswer3.setTextColor(Color.WHITE);
         } else if (tvAnswer4.getText().toString().equals(correctAnswer)) {
-            cardAnswer4.setCardBackgroundColor(Color.parseColor("#A5D6A7"));
+            cardAnswer4.setCardBackgroundColor(Color.parseColor("#4CAF50"));
             tvAnswer4.setTextColor(Color.WHITE);
         }
     }
