@@ -36,28 +36,64 @@ public class ResultActivity extends AppCompatActivity {
         int score = getIntent().getIntExtra("score", 0);
         int total = getIntent().getIntExtra("total", 10);
 
-        tvScore.setText(score + "/" + total);
+        // Tính điểm chữ cái theo bảng
+        String grade = calculateGrade(score, total);
+        tvScore.setText(score + "/" + total + "\n" + grade);
 
         // Tính phần trăm
         double percentage = (score * 100.0) / total;
 
-        // Hiển thị thông điệp dựa trên kết quả - giống trong ảnh
-        if (percentage == 100) {
+        // Hiển thị thông điệp dựa trên kết quả
+        if (grade.equals("A+")) {
             tvResult.setText("Congratulations!");
             tvMessage.setText("Perfect! You have done excellent!");
-        } else if (percentage >= 80) {
+        } else if (grade.equals("A") || grade.equals("B")) {
             tvResult.setText("Congratulations!");
             tvMessage.setText("Great job! You have done well!");
-        } else if (percentage >= 60) {
+        } else if (grade.equals("C")) {
             tvResult.setText("Good Job!");
             tvMessage.setText("Nice work! Keep it up!");
-        } else if (percentage >= 40) {
+        } else if (grade.equals("D")) {
             tvResult.setText("Keep Trying!");
             tvMessage.setText("Not bad! Practice makes perfect!");
         } else {
             tvResult.setText("Keep Learning!");
             tvMessage.setText("Don't give up! Keep studying!");
         }
+    }
+
+    private String calculateGrade(int score, int total) {
+        // Tính điểm chữ cái theo bảng
+        if (total == 10) {
+            if (score >= 10) return "A+";
+            if (score >= 9) return "A";
+            if (score >= 8) return "B";
+            if (score >= 7) return "C";
+            if (score >= 5) return "D";
+            return "F";
+        } else if (total == 15) {
+            if (score >= 15) return "A+";
+            if (score >= 13) return "A";
+            if (score >= 12) return "B";
+            if (score >= 10) return "C";
+            if (score >= 8) return "D";
+            return "F";
+        } else if (total == 20) {
+            if (score >= 20) return "A+";
+            if (score >= 17) return "A";
+            if (score >= 15) return "B";
+            if (score >= 13) return "C";
+            if (score >= 10) return "D";
+            return "F";
+        } else if (total == 30) {
+            if (score >= 29) return "A+";
+            if (score >= 26) return "A";
+            if (score >= 23) return "B";
+            if (score >= 19) return "C";
+            if (score >= 15) return "D";
+            return "F";
+        }
+        return "N/A";
     }
 
     private void retryQuiz() {

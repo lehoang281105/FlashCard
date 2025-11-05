@@ -99,10 +99,12 @@
                 android:id="@+id/tv_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="19/20"
+                android:text="7/15\nD"
                 android:textSize="42sp"
                 android:textStyle="bold"
                 android:textColor="#5E35B1"
+                android:gravity="center"
+                android:lineSpacingExtra="-8dp"
                 android:layout_marginBottom="16dp"/>
 
             <!-- Congratulations Title -->
@@ -124,36 +126,7 @@
                 android:text="Great job, Kenzy! You have done well"
                 android:textSize="15sp"
                 android:textColor="#666666"
-                android:textAlignment="center"
-                android:layout_marginBottom="20dp"/>
-
-            <!-- Points Badge -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:background="@drawable/points_badge_background"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="💎"
-                    android:textSize="18sp"
-                    android:layout_marginEnd="8dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="200 Points"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:textColor="#5E35B1"/>
-            </LinearLayout>
+                android:textAlignment="center"/>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
