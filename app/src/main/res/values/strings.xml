@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">FlashLearn Lite</string>
+
+    <!-- Navigation -->
+    <string name="nav_flashcard">Học Flashcard</string>
+    <string name="nav_quiz">Quiz</string>
+    <string name="nav_vocabulary">Từ Vựng</string>
+
+    <!-- Flashcard Screen -->
+    <string name="flashcard_title">Học Flashcard</string>
+    <string name="tap_to_flip">Nhấn để lật thẻ</string>
+    <string name="previous">Trước</string>
+    <string name="next">Tiếp theo</string>
+    <string name="speak">Phát âm</string>
+    <string name="example">Ví dụ:</string>
+    <string name="loading">Đang tải...</string>
+    <string name="error_loading">Lỗi tải dữ liệu. Vui lòng thử lại.</string>
+    <string name="no_words">Chưa có từ vựng nào!</string>
+    <string name="card_progress">%1$d / %2$d</string>
+
+    <!-- Quiz Screen (for Người 2) -->
+    <string name="quiz_title">Làm Quiz</string>
+    <string name="coming_soon">Tính năng đang phát triển...</string>
+
+    <!-- Vocabulary Screen (for Người 3) -->
+    <string name="vocabulary_title">Quản lý Từ Vựng</string>
+
+    <!-- Common -->
+    <string name="retry">Thử lại</string>
+    <string name="close">Đóng</string>
+</resources>
