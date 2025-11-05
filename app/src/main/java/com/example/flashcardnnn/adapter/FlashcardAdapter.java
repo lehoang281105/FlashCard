@@ -52,18 +52,22 @@ public class FlashcardAdapter extends RecyclerView.Adapter<FlashcardAdapter.Flas
 
     @Override
     public void onBindViewHolder(@NonNull FlashcardViewHolder holder, int position) {
-        Word word = wordList.get(position);
-        holder.bind(word);
+        if (wordList != null && position < wordList.size()) {
+            Word word = wordList.get(position);
+            holder.bind(word);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return wordList.size();
+        return wordList != null ? wordList.size() : 0;
     }
 
     public void updateData(List<Word> newWordList) {
-        this.wordList = newWordList;
-        notifyDataSetChanged();
+        if (newWordList != null) {
+            this.wordList = newWordList;
+            notifyDataSetChanged();
+        }
     }
 
     public void shutdown() {

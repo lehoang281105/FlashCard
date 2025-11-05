@@ -22,7 +22,6 @@ import com.example.flashcardnnn.model.Word;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -36,14 +35,12 @@ public class FlashcardFragment extends Fragment {
     private ViewPager2 viewPager;
     private FlashcardAdapter adapter;
     private TextView tvProgress;
-    private MaterialButton btnPrevious, btnNext, btnShuffle;
+    private MaterialButton btnPrevious, btnNext;
 
     private LinearLayout loadingView, errorView, emptyView;
     private Button btnRetry;
 
-    private List<Word> originalWordList = new ArrayList<>();
     private List<Word> currentWordList = new ArrayList<>();
-    private boolean isShuffled = false;
 
     @Nullable
     @Override
@@ -66,7 +63,6 @@ public class FlashcardFragment extends Fragment {
         tvProgress = view.findViewById(R.id.tvProgress);
         btnPrevious = view.findViewById(R.id.btnPrevious);
         btnNext = view.findViewById(R.id.btnNext);
-        btnShuffle = view.findViewById(R.id.btnShuffle);
 
         loadingView = view.findViewById(R.id.loadingView);
         errorView = view.findViewById(R.id.errorView);
@@ -103,8 +99,6 @@ public class FlashcardFragment extends Fragment {
             }
         });
 
-        btnShuffle.setOnClickListener(v -> toggleShuffle());
-
         btnRetry.setOnClickListener(v -> loadWords());
     }
 
@@ -115,20 +109,26 @@ public class FlashcardFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Word>> call, Response<List<Word>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    originalWordList = response.body();
+                    List<Word> words = response.body();
 
-                    if (originalWordList.isEmpty()) {
+                    if (words.isEmpty()) {
                         showEmpty();
                     } else {
-                        currentWordList = new ArrayList<>(originalWordList);
-                        isShuffled = false;
-                        updateShuffleButton();
-                        showContent();
-                        adapter.updateData(currentWordList);
-                        updateProgress(0);
-                        updateNavigationButtons(0);
+                        currentWordList.clear();
+                        currentWordList.addAll(words);
 
-                        Log.d(TAG, "Loaded " + originalWordList.size() + " words");
+                        showContent();
+
+                        adapter.notifyDataSetChanged();
+
+                        // Set to first item
+                        viewPager.post(() -> {
+                            viewPager.setCurrentItem(0, false);
+                            updateProgress(0);
+                            updateNavigationButtons(0);
+                        });
+
+                        Log.d(TAG, "Loaded " + currentWordList.size() + " words");
                     }
                 } else {
                     showError("Lỗi tải dữ liệu: " + response.code());
@@ -143,83 +143,33 @@ public class FlashcardFragment extends Fragment {
         });
     }
 
-    private void toggleShuffle() {
-        if (originalWordList.isEmpty()) {
-            return;
-        }
-
-        int currentPosition = viewPager.getCurrentItem();
-        Word currentWord = null;
-        if (currentPosition >= 0 && currentPosition < currentWordList.size()) {
-            currentWord = currentWordList.get(currentPosition);
-        }
-
-        if (isShuffled) {
-            // Return to original order
-            currentWordList = new ArrayList<>(originalWordList);
-            isShuffled = false;
-            Toast.makeText(getContext(), "Đã trở về thứ tự ban đầu", Toast.LENGTH_SHORT).show();
-        } else {
-            // Shuffle
-            currentWordList = new ArrayList<>(originalWordList);
-            Collections.shuffle(currentWordList);
-            isShuffled = true;
-            Toast.makeText(getContext(), "Đã trộn ngẫu nhiên", Toast.LENGTH_SHORT).show();
-        }
-
-        adapter.updateData(currentWordList);
-        updateShuffleButton();
-
-        // Try to find the current word in the new list
-        if (currentWord != null) {
-            int newPosition = findWordPosition(currentWord);
-            if (newPosition != -1) {
-                viewPager.setCurrentItem(newPosition, false);
-            } else {
-                viewPager.setCurrentItem(0, false);
-            }
-        } else {
-            viewPager.setCurrentItem(0, false);
-        }
-
-        updateProgress(viewPager.getCurrentItem());
-        updateNavigationButtons(viewPager.getCurrentItem());
-    }
-
-    private int findWordPosition(Word word) {
-        for (int i = 0; i < currentWordList.size(); i++) {
-            if (currentWordList.get(i).getId().equals(word.getId())) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
     private void updateProgress(int position) {
-        if (currentWordList.isEmpty()) {
+        if (currentWordList == null || currentWordList.isEmpty()) {
             tvProgress.setText("0 / 0");
         } else {
+            // Validate position
+            if (position < 0) position = 0;
+            if (position >= currentWordList.size()) position = currentWordList.size() - 1;
+
             tvProgress.setText(getString(R.string.card_progress,
                     position + 1, currentWordList.size()));
         }
     }
 
     private void updateNavigationButtons(int position) {
+        if (currentWordList == null || currentWordList.isEmpty()) {
+            btnPrevious.setEnabled(false);
+            btnNext.setEnabled(false);
+            btnPrevious.setAlpha(0.5f);
+            btnNext.setAlpha(0.5f);
+            return;
+        }
+
         btnPrevious.setEnabled(position > 0);
         btnNext.setEnabled(position < currentWordList.size() - 1);
 
         btnPrevious.setAlpha(position > 0 ? 1.0f : 0.5f);
         btnNext.setAlpha(position < currentWordList.size() - 1 ? 1.0f : 0.5f);
-    }
-
-    private void updateShuffleButton() {
-        if (isShuffled) {
-            btnShuffle.setIconResource(android.R.drawable.ic_menu_revert);
-            btnShuffle.setText("Bỏ trộn");
-        } else {
-            btnShuffle.setIconResource(android.R.drawable.ic_menu_rotate);
-            btnShuffle.setText(R.string.shuffle);
-        }
     }
 
     private void showLoading() {
@@ -228,7 +178,6 @@ public class FlashcardFragment extends Fragment {
         emptyView.setVisibility(View.GONE);
         viewPager.setVisibility(View.GONE);
         tvProgress.setVisibility(View.GONE);
-        btnShuffle.setVisibility(View.GONE);
     }
 
     private void showError(String message) {
@@ -237,7 +186,6 @@ public class FlashcardFragment extends Fragment {
         emptyView.setVisibility(View.GONE);
         viewPager.setVisibility(View.GONE);
         tvProgress.setVisibility(View.GONE);
-        btnShuffle.setVisibility(View.GONE);
 
         TextView tvError = errorView.findViewById(R.id.tvError);
         tvError.setText(message);
@@ -249,7 +197,6 @@ public class FlashcardFragment extends Fragment {
         emptyView.setVisibility(View.VISIBLE);
         viewPager.setVisibility(View.GONE);
         tvProgress.setVisibility(View.GONE);
-        btnShuffle.setVisibility(View.GONE);
     }
 
     private void showContent() {
@@ -258,7 +205,6 @@ public class FlashcardFragment extends Fragment {
         emptyView.setVisibility(View.GONE);
         viewPager.setVisibility(View.VISIBLE);
         tvProgress.setVisibility(View.VISIBLE);
-        btnShuffle.setVisibility(View.VISIBLE);
     }
 
     @Override
