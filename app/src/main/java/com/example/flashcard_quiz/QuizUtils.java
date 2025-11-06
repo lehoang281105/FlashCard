@@ -4,9 +4,6 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-/**
- * Utility class cho các chức năng hỗ trợ Quiz
- */
 public class QuizUtils {
 
     /**
@@ -80,14 +77,6 @@ public class QuizUtils {
         }
     }
 
-    /**
-     * Format thời gian (nếu muốn thêm timer sau này)
-     */
-    public static String formatTime(int seconds) {
-        int minutes = seconds / 60;
-        int secs = seconds % 60;
-        return String.format("%02d:%02d", minutes, secs);
-    }
 
     /**
      * Kiểm tra điểm có phá kỷ lục không

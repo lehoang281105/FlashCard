@@ -65,15 +65,11 @@ public class ResultActivity extends AppCompatActivity {
     private void displayResult() {
         int score = getIntent().getIntExtra("score", 0);
         int total = getIntent().getIntExtra("total", 10);
-
-        // Hiển thị điểm số bình thường
         tvScore.setText(score + "/" + total);
 
-        // Tính điểm chữ cái theo bảng và hiển thị ở giữa vòng tròn
         String grade = calculateGrade(score, total);
         tvGrade.setText(grade);
 
-        // Hiển thị thông điệp dựa trên kết quả
         if (grade.equals("A+")) {
             tvResult.setText("Congratulations!");
             tvMessage.setText("Perfect! You have done excellent!");
@@ -93,7 +89,6 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     private String calculateGrade(int score, int total) {
-        // Tính điểm chữ cái theo bảng
         if (total == 10) {
             if (score >= 10) return "A+";
             if (score >= 9) return "A";
@@ -140,7 +135,6 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     private void goHome() {
-        // Luôn quay về MainActivity chính của app (package com.example.flashcardnnn)
         Intent intent = new Intent(ResultActivity.this, com.example.flashcardnnn.MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
