@@ -40,6 +40,9 @@ public class TopicWordsActivity extends AppCompatActivity implements WordAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topic_words);
 
+        // ẨN bàn phím khi mở Activity
+        getWindow().setSoftInputMode(android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
         topicId = getIntent().getStringExtra("topicId");
         topicName = getIntent().getStringExtra("topicName");
 
@@ -55,6 +58,10 @@ public class TopicWordsActivity extends AppCompatActivity implements WordAdapter
         fabAddWord = findViewById(R.id.fabAddWord);
         progressBar = findViewById(R.id.progressBar);
         androidx.appcompat.widget.SearchView searchViewWord = findViewById(R.id.searchViewWord);
+
+        // TẮT auto focus vào SearchView để tránh bàn phím tự động hiện lên
+        searchViewWord.setFocusable(false);
+        searchViewWord.clearFocus();
 
         fabAddWord.setOnClickListener(v -> {
             Intent intent = new Intent(TopicWordsActivity.this, AddEditWordActivity.class);

@@ -79,6 +79,10 @@ public class VocabularyFragment extends Fragment implements TopicAdapter.OnTopic
 
         fabAddTopic.setVisibility(View.VISIBLE);
 
+        // TẮT auto focus vào SearchView để tránh bàn phím tự động hiện lên
+        searchViewTopic.setFocusable(false);
+        searchViewTopic.clearFocus();
+
         fabAddTopic.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), AddEditTopicActivity.class);
             startActivity(intent);
