@@ -21,14 +21,14 @@ public class FlashcardTopicAdapter extends RecyclerView.Adapter<FlashcardTopicAd
     private List<Topic> topicList;
     private OnTopicClickListener listener;
     private static final String[] GRADIENT_COLORS = {
-            "#667eea,#764ba2", // Purple gradient
-            "#f093fb,#f5576c", // Pink gradient
-            "#4facfe,#00f2fe", // Blue gradient
-            "#43e97b,#38f9d7", // Green gradient
-            "#fa709a,#fee140", // Orange-Pink gradient
-            "#30cfd0,#330867", // Blue-Purple gradient
-            "#a8edea,#fed6e3", // Light gradient
-            "#ff9a9e,#fecfef"  // Pink gradient
+            "#2C5F2D", // Dark Green
+            "#1A535C", // Dark Teal
+            "#3F51B5", // Indigo
+            "#5E35B1", // Deep Purple
+            "#D84315", // Deep Orange
+            "#6A1B9A", // Purple
+            "#00695C", // Teal
+            "#424242"  // Dark Gray
     };
 
     public interface OnTopicClickListener {
@@ -62,12 +62,14 @@ public class FlashcardTopicAdapter extends RecyclerView.Adapter<FlashcardTopicAd
     class ViewHolder extends RecyclerView.ViewHolder {
         private CardView cardView;
         private TextView tvTopicName;
+        private TextView tvTopicDescription;
         private TextView tvWordCount;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             cardView = (CardView) itemView;
             tvTopicName = itemView.findViewById(R.id.tvTopicName);
+            tvTopicDescription = itemView.findViewById(R.id.tvTopicDescription);
             tvWordCount = itemView.findViewById(R.id.tvWordCount);
 
             itemView.setOnClickListener(v -> {
@@ -81,20 +83,28 @@ public class FlashcardTopicAdapter extends RecyclerView.Adapter<FlashcardTopicAd
         public void bind(Topic topic) {
             tvTopicName.setText(topic.getName());
 
+            // Set description
+            String description = topic.getDescription();
+            if (description != null && !description.isEmpty()) {
+                tvTopicDescription.setText(description);
+                tvTopicDescription.setVisibility(View.VISIBLE);
+            } else {
+                tvTopicDescription.setVisibility(View.GONE);
+            }
+
             // Format word count
             int count = topic.getWordCount();
             String phraseText = count == 1 ? "phrase" : "phrases";
             tvWordCount.setText(count + " " + phraseText);
 
-            // Set gradient background color
-            String gradient = GRADIENT_COLORS[getAdapterPosition() % GRADIENT_COLORS.length];
-            String[] colors = gradient.split(",");
+            // Set darker background color
+            String colorHex = GRADIENT_COLORS[getAdapterPosition() % GRADIENT_COLORS.length];
 
-            // Use the first color as card background
+            // Use the color as card background
             try {
-                cardView.setCardBackgroundColor(Color.parseColor(colors[0]));
+                cardView.setCardBackgroundColor(Color.parseColor(colorHex));
             } catch (Exception e) {
-                cardView.setCardBackgroundColor(Color.parseColor("#667eea"));
+                cardView.setCardBackgroundColor(Color.parseColor("#3F51B5"));
             }
         }
     }
