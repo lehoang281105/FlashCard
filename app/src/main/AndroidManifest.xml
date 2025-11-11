@@ -64,6 +64,16 @@
             android:exported="false"
             android:label="Chỉnh sửa từ vựng" />
 
+        <!-- Các màn hình cho phần Flashcard -->
+        <activity
+            android:name="com.example.flashcardnnn.activity.FlashcardTopicSelectionActivity"
+            android:exported="false"
+            android:label="Chọn chủ đề" />
+        <activity
+            android:name="com.example.flashcardnnn.activity.FlashcardActivity"
+            android:exported="false"
+            android:label="Flashcard" />
+
     </application>
 
 </manifest>
