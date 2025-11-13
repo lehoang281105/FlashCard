@@ -54,7 +54,7 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        // Xử lý nút Back theo cách mới
+
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -110,7 +110,7 @@ public class QuizActivity extends AppCompatActivity {
         // Back button
         btnBack.setOnClickListener(v -> finish());
 
-        // Set click listeners cho từng card
+
         cardAnswer1.setOnClickListener(v -> checkAnswer(tvAnswer1, cardAnswer1));
         cardAnswer2.setOnClickListener(v -> checkAnswer(tvAnswer2, cardAnswer2));
         cardAnswer3.setOnClickListener(v -> checkAnswer(tvAnswer3, cardAnswer3));
@@ -135,7 +135,7 @@ public class QuizActivity extends AppCompatActivity {
 
     private void loadWordsFromAPI() {
         if (isRedoMode) {
-            // Nếu là chế độ redo, chỉ load wordList để có đáp án sai
+            // redo load câu sai
             ApiService apiService = RetrofitClient.getClient().create(ApiService.class);
             Call<List<Word>> call = apiService.getWords();
 
@@ -196,7 +196,6 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void prepareRedoQuiz() {
-        // Tạo danh sách chỉ chứa các câu sai
         List<Word> redoWords = new ArrayList<>();
         for (int index : wrongAnswerIndices) {
             redoWords.add(quizWords.get(index));
@@ -226,10 +225,8 @@ public class QuizActivity extends AppCompatActivity {
         tvAnswer3.setText(answers.get(2));
         tvAnswer4.setText(answers.get(3));
 
-        // Reset màu sắc các card
         resetCardColors();
 
-        // Enable tất cả các card
         cardAnswer1.setEnabled(true);
         cardAnswer2.setEnabled(true);
         cardAnswer3.setEnabled(true);
@@ -270,14 +267,12 @@ public class QuizActivity extends AppCompatActivity {
         hasAnswered = true;
         String userAnswer = selectedAnswer.getText().toString();
 
-        // Disable tất cả các card sau khi chọn
         cardAnswer1.setEnabled(false);
         cardAnswer2.setEnabled(false);
         cardAnswer3.setEnabled(false);
         cardAnswer4.setEnabled(false);
 
         if (userAnswer.equals(correctAnswer)) {
-            // Đáp án đúng - màu xanh lá
             selectedCard.setCardBackgroundColor(Color.parseColor("#4CAF50"));
             selectedAnswer.setTextColor(Color.WHITE);
             score++;
@@ -287,12 +282,11 @@ public class QuizActivity extends AppCompatActivity {
             selectedCard.setCardBackgroundColor(Color.parseColor("#EF5350"));
             selectedAnswer.setTextColor(Color.WHITE);
 
-            // Lưu index của câu sai (chỉ trong chế độ bình thường)
+            // lưu câu sai
             if (!isRedoMode) {
                 wrongAnswerIndices.add(currentQuestionIndex);
             }
 
-            // Highlight đáp án đúng màu xanh
             highlightCorrectAnswer();
         }
 

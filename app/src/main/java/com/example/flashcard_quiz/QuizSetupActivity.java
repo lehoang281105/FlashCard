@@ -87,7 +87,6 @@ public class QuizSetupActivity extends AppCompatActivity {
     }
 
     private void animateCards() {
-        // Animate cards entering from bottom
         animateCardEntry(card10, 0);
         animateCardEntry(card15, 100);
         animateCardEntry(card20, 200);

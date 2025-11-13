@@ -20,17 +20,12 @@ public class QuizUtils {
         return false;
     }
 
-    /**
-     * Tính phần trăm điểm số
-     */
     public static double calculatePercentage(int score, int total) {
         if (total == 0) return 0;
         return (score * 100.0) / total;
     }
 
-    /**
-     * Lấy thông điệp dựa trên phần trăm
-     */
+
     public static String getResultMessage(double percentage) {
         if (percentage == 100) {
             return "🎉 XUẤT SẮC!";
@@ -45,9 +40,7 @@ public class QuizUtils {
         }
     }
 
-    /**
-     * Lấy mô tả chi tiết dựa trên phần trăm
-     */
+
     public static String getResultDescription(double percentage) {
         if (percentage == 100) {
             return "Hoàn hảo! Bạn đã trả lời đúng tất cả!";
@@ -62,18 +55,15 @@ public class QuizUtils {
         }
     }
 
-    /**
-     * Lấy màu cho kết quả (dưới dạng String color code)
-     */
     public static String getResultColor(double percentage) {
         if (percentage >= 80) {
-            return "#4CAF50"; // Green
+            return "#4CAF50";
         } else if (percentage >= 60) {
-            return "#FF9800"; // Orange
+            return "#FF9800";
         } else if (percentage >= 40) {
-            return "#2196F3"; // Blue
+            return "#2196F3";
         } else {
-            return "#F44336"; // Red
+            return "#F44336";
         }
     }
 
@@ -85,9 +75,7 @@ public class QuizUtils {
         return currentScore > bestScore;
     }
 
-    /**
-     * Lấy rank dựa trên phần trăm
-     */
+
     public static String getRank(double percentage) {
         if (percentage == 100) return "S";
         else if (percentage >= 90) return "A+";

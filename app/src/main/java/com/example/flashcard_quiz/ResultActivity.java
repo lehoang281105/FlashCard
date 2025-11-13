@@ -49,14 +49,14 @@ public class ResultActivity extends AppCompatActivity {
         // Ẩn nút Retry (không cần thiết nữa)
         btnRetry.setVisibility(View.GONE);
 
-        // Hiển thị nút Redo Wrong Answers nếu có câu sai và không phải chế độ redo
+
         if (!isRedoMode && wrongAnswerIndices != null && !wrongAnswerIndices.isEmpty()) {
             btnRedoWrong.setVisibility(View.VISIBLE);
         } else {
             btnRedoWrong.setVisibility(View.GONE);
         }
 
-        // Nếu là chế độ redo, đổi text button Home
+
         if (isRedoMode) {
             btnHome.setText("Back to Quiz Setup");
         }
